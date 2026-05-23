@@ -63,7 +63,7 @@ most-used tools to run offline inside the extension itself.
 
 NO ADS. NO PAYWALL. NO SUBSCRIPTION. NO SIGNUP.
 
-Source: https://github.com/zerethon/extensions
+Source: https://github.com/zerethonapp/extensions
 Privacy policy: https://tools.zerethon.com/extension/privacy
 Questions, requests, bug reports: support@zerethon.com
 ```

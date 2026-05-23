@@ -393,7 +393,7 @@ Bundle a tool's offline version when **either** is true:
 - **Repo location**: standalone `extensions/` repo (current state). Submodule from `Social/` root if discoverability needed.
 - **`?ref=ext`**: ship it.
 - **Cross-browser**: Chrome first, then Edge with the same zip. Firefox deferred until v0.2.
-- **Open source**: yes — push to `github.com/zerethon/extensions` at v0.1 launch.
+- **Open source**: yes — push to `github.com/zerethonapp/extensions` at v0.1 launch.
 
 ---
 

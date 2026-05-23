@@ -8,3 +8,8 @@ dist/
 .env
 .env.local
 coverage/
+
+# Override the user's global gitignore which excludes anything named `tickets`/`Tickets`.
+# This repo intentionally tracks its ticket tree as the project audit trail.
+!tickets/
+!tickets/**

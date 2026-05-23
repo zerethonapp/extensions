@@ -64,7 +64,7 @@ use user data for purposes unrelated to the extension's single purpose.
 
 ## Source
 The extension is open-source. You can audit every line at
-https://github.com/zerethon/extensions (license: MIT). Reproducible builds
+https://github.com/zerethonapp/extensions (license: MIT). Reproducible builds
 (`npm run build`) produce the byte-identical zip submitted to the stores.
 
 ## Contact
