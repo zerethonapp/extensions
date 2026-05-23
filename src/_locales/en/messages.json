@@ -1,0 +1,73 @@
+{
+  "ext_name": {
+    "message": "Zerethon Tools",
+    "description": "Extension name shown in Chrome Web Store and the toolbar."
+  },
+  "ext_description": {
+    "message": "Launcher for 111+ free dev / creator / web3 utilities at tools.zerethon.com. Search, favorites, context menu, omnibox. Privacy-first.",
+    "description": "Extension store description (max 132 chars rendered as subtitle)."
+  },
+  "ext_action_title": {
+    "message": "Open Zerethon Tools launcher"
+  },
+  "ext_command_open": {
+    "message": "Open Zerethon Tools launcher"
+  },
+  "search_placeholder": {
+    "message": "Search tools — JSON, hash, base64…"
+  },
+  "section_favorites": {
+    "message": "Favorites"
+  },
+  "section_recents": {
+    "message": "Recent"
+  },
+  "section_results": {
+    "message": "Results"
+  },
+  "empty_state": {
+    "message": "No tools match. Try a shorter query."
+  },
+  "footer_hint": {
+    "message": "Enter to open · ★ to pin · type \"zt\" in address bar"
+  },
+  "badge_bundled": {
+    "message": "offline"
+  },
+  "badge_bundled_tip": {
+    "message": "Runs inside the extension. No network required."
+  },
+  "badge_link": {
+    "message": "↗ web"
+  },
+  "badge_link_tip": {
+    "message": "Opens at tools.zerethon.com in a new tab."
+  },
+  "aria_favorite": {
+    "message": "Add to favorites"
+  },
+  "aria_unfavorite": {
+    "message": "Remove from favorites"
+  },
+  "ctx_format_json": {
+    "message": "Zerethon: Format as JSON"
+  },
+  "ctx_b64_decode": {
+    "message": "Zerethon: Decode Base64"
+  },
+  "ctx_b64_encode": {
+    "message": "Zerethon: Encode Base64"
+  },
+  "ctx_hash_sha256": {
+    "message": "Zerethon: Hash (SHA-256)"
+  },
+  "ctx_case_convert": {
+    "message": "Zerethon: Convert case…"
+  },
+  "ctx_parse_url": {
+    "message": "Zerethon: Parse URL"
+  },
+  "omnibox_default": {
+    "message": "Search Zerethon Tools — type a tool name, press Enter to open"
+  }
+}

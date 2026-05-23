@@ -1,0 +1,18 @@
+{
+  "name": "zerethon-tools-extension",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Browser extension launcher + offline toolkit for tools.zerethon.com (Manifest V3).",
+  "homepage": "https://tools.zerethon.com/extension",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs --env=prod",
+    "build:prod": "node scripts/build.mjs --env=prod",
+    "build:local": "node scripts/build.mjs --env=local",
+    "verify": "node scripts/verify-package.mjs",
+    "sync": "node scripts/sync-tools-registry.mjs",
+    "clean": "rm -rf dist *.zip"
+  },
+  "devDependencies": {}
+}
