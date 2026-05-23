@@ -3,6 +3,22 @@
 Browser-extension companion for [tools.zerethon.com](https://tools.zerethon.com).
 Manifest V3. Chrome + Edge. Vanilla JS, no runtime dependencies.
 
+## Links
+
+### 🟢 Production (real, public)
+- **Landing page** — https://tools.zerethon.com/extension
+- **Privacy policy** — https://tools.zerethon.com/extension/privacy
+- **Tools catalog (BE)** — https://tools.zerethon.com (111+ free utilities)
+- **Source code** — https://github.com/zerethonapp/extensions
+- **Chrome Web Store** — _TBD (P4-01 submission pending)_
+- **Microsoft Edge Add-ons** — _TBD (P4-02 submission pending)_
+- **Support** — support@zerethon.com
+
+### 🟠 Local dev (NOT public — only on your machine)
+- **Local BE** — `https://tools.zerethon.local:7890` (default; configurable in [`scripts/build.mjs`](scripts/build.mjs) → `ENVS.local.baseUrl`)
+- **Built by**: `npm run build:local`
+- **Recognise it in Chrome**: extension name has " (DEV)" suffix + popup shows an orange DEV bar at top
+
 > **Mode: Option A — Companion Launcher.**
 > Every tool opens in a new tab on the website. No tools run offline inside
 > the extension yet. v0.2 will bundle the most-used tools based on real
@@ -47,11 +63,11 @@ defaults to production so loading `src/` unpacked Just Works against the live
 site without a build step.
 
 ```bash
-npm run build:prod       # → dist/  + zerethon-tools-vX.Y.Z.zip       (https://tools.zerethon.com)
-npm run build:local      # → dist/  + zerethon-tools-vX.Y.Z-dev.zip   (https://tools.zerethon.local:7890)
+npm run build:prod       # → dist/  + zerethon-tools-vX.Y.Z.zip       (prod: https://tools.zerethon.com)
+npm run build:local      # → dist/  + zerethon-tools-vX.Y.Z-dev.zip   (dev:  https://tools.zerethon.local:7890)
 npm run build            # alias for build:prod
 npm run verify           # 8-point pre-submission lint (run before any submit)
-npm run sync             # refresh src/lib/tools-registry.js from live BE
+npm run sync             # refresh src/lib/tools-registry.js from live BE (always prod)
 npm run clean            # rm -rf dist *.zip
 ```
 
@@ -75,11 +91,17 @@ To switch between dev and prod installs, install both — Chrome treats them as
 different extensions (different host permissions). The " (DEV)" suffix in the
 name and the orange bar make them easy to tell apart.
 
-### Connecting to https://tools.zerethon.local:7890
+### Connecting the dev build to your local BE
+
+The dev build defaults to `https://tools.zerethon.local:7890` — it is **not** a
+public URL, it only resolves on your machine. If your local BE listens
+elsewhere, change `ENVS.local.baseUrl` in [`scripts/build.mjs`](scripts/build.mjs)
+and rebuild.
+
 1. Make sure the host resolves (hosts file or mDNS) and the BE is serving HTTPS
-   on port 7890.
-2. If using a self-signed cert: open `https://tools.zerethon.local:7890` in a
-   regular tab first and accept the cert. The extension can then connect.
+   on the configured port.
+2. If using a self-signed cert: open the local URL in a regular tab first and
+   accept the cert. The extension can then connect.
 3. The BE must have the prefill route shipped (`?input=<urlsafe-base64>` on
    the 5 supported tools) for context-menu UX to feel complete — see
    [`PLAN.md`](PLAN.md) §13 item 4.
