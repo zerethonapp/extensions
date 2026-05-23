@@ -8,7 +8,9 @@
 - **Blocked by**: P0-01, P0-02, P2-01, P2-02, P3-01, P3-02, P3-03, P3-04
 
 ## Goal
-Submit `zerethon-tools-v0.1.0.zip` to the Chrome Web Store. Initially **Unlisted** for 3 days of internal smoke-testing, then flip to **Public**.
+Submit `zerethon-tools-v0.2.0.zip` to the Chrome Web Store. Initially **Unlisted** for 3 days of internal smoke-testing, then flip to **Public**.
+
+> **2026-05-23 — Path A chosen**: skipping a v0.1-only submit. The initial public release IS v0.2.0, which includes 3 offline-bundled tools (json-formatter, base64-encoder, hash-generator) in addition to the launcher for 109 more. Stronger first-impression listing, no resubmit needed.
 
 ## Why
 End goal of the whole project. Unlisted-first lets us catch any "works on my machine but not on a stranger's clean install" issues before exposing to the open store.
@@ -23,7 +25,7 @@ End goal of the whole project. Unlisted-first lets us catch any "works on my mac
 
 ### Upload + fill dashboard
 - [ ] Sign in to https://chrome.google.com/webstore/devconsole as the publisher account from P0-01
-- [ ] Upload `zerethon-tools-v0.1.0.zip` to the stub item created in P0-01
+- [ ] Upload `zerethon-tools-v0.2.0.zip` to the stub item created in P0-01
 - [ ] **Store listing**:
   - Title from `docs/LISTING.md`
   - Short summary from `docs/LISTING.md`

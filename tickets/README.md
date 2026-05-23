@@ -60,7 +60,7 @@ Legend: 🟢 done · 🔵 in progress · 🟡 plan · ⛔ blocked · ➖ deferre
 |---|---|---|---|---|
 | P6-01 | [Pick offline-port set from usage data](phase-6-v0.2-offline/01-pick-offline-set.md) | 🔵 partial (3/5) | P1 | 3 universal winners picked pre-data; 2 slots reserved for telemetry-driven picks |
 | P6-02 | [Port 5-10 tools to vanilla JS offline](phase-6-v0.2-offline/02-port-tools.md) | 🔵 partial (3/5) | P2 | 2026-05-23: json-formatter, base64-encoder, hash-generator ported (39 KB total) |
-| P6-03 | [v0.2 release (resubmit Chrome + Edge)](phase-6-v0.2-offline/03-v0.2-release.md) | 🟡 plan | P2 | Source bumped to 0.2.0; ship after v0.1 approves |
+| P6-03 | [v0.2 release (resubmit Chrome + Edge)](phase-6-v0.2-offline/03-v0.2-release.md) | ⏭ merged into P4-01 | — | Path A chosen 2026-05-23 — v0.2 IS the initial release. No resubmit needed; P4-01 ships v0.2.0 directly. |
 
 ---
 
