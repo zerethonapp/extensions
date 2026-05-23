@@ -19,10 +19,11 @@ Manifest V3. Chrome + Edge. Vanilla JS, no runtime dependencies.
 - **Built by**: `npm run build:local`
 - **Recognise it in Chrome**: extension name has " (DEV)" suffix + popup shows an orange DEV bar at top
 
-> **Mode: Option A — Companion Launcher.**
-> Every tool opens in a new tab on the website. No tools run offline inside
-> the extension yet. v0.2 will bundle the most-used tools based on real
-> usage data. See [`PLAN.md`](PLAN.md) for the rationale.
+> **Mode: Companion Launcher + selective offline bundling (v0.2).**
+> 3 tools run fully inside the extension with **no network access**:
+> `json-formatter`, `base64-encoder`, `hash-generator`. The other ~109 tools
+> open as new tabs on tools.zerethon.com. 2 more offline ports will be
+> picked data-driven from install telemetry. See [`PLAN.md`](PLAN.md).
 
 ## What it does
 - Popup launcher (`Ctrl+Shift+Z` / `Cmd+Shift+Z`) — search 111 tools, pin

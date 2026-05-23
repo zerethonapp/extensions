@@ -1,11 +1,11 @@
 # P6-02 — Port 5-10 tools to vanilla JS offline
 
-- **Status**: 🟡 plan
+- **Status**: 🔵 partial (3 of planned 5 ported on 2026-05-23)
 - **Phase**: 6
 - **Priority**: P2
 - **Estimate**: 2-4 days (depends on count)
 - **Blocks**: P6-03 (release)
-- **Blocked by**: P6-01 (final tool list)
+- **Blocked by**: P6-01 (final tool list — 3/5 confirmed, 2 remaining slots wait for usage data)
 
 ## Goal
 Implement the offline versions of the 5-10 tools chosen in P6-01. Each runs entirely inside the extension, no network access required.
@@ -51,3 +51,4 @@ Cross-cutting:
 
 ## Updates
 - 2026-05-23: created
+- 2026-05-23 (later): ported 3 of 5 universal-winner tools — `json-formatter` (JSON.parse + indent), `base64-encoder` (btoa/atob + URL-safe), `hash-generator` (SubtleCrypto: SHA-1/256/384/512; MD5 deferred to web link since SubtleCrypto doesn't ship it). Shared shell created at `src/tools/_shell/` (shell.css 4.5 KB + shell.js 2.3 KB — prefill decoder, copy/toast helpers, topbar factory). All 3 read `?input=<urlsafe-base64>` from context-menu prefill. Base64 also reads `?mode=encode|decode`. Verify lint adds `checkBundledTools` → 9/9 pass. Build whitelist updated. Prod zip 39.3 KB (60% under 100 KB budget). Source bumped to 0.2.0. Remaining 2 slots wait for telemetry data (P5-02).

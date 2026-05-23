@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hash Generator — Zerethon Tools (offline)</title>
+  <link rel="stylesheet" href="../_shell/shell.css" />
+</head>
+<body>
+  <div class="zt-page" id="zt-page">
+    <div class="zt-controls">
+      <label class="zt-check" for="algo">Algorithm</label>
+      <select id="algo" class="zt-select" aria-label="Hash algorithm">
+        <option value="SHA-256" selected>SHA-256</option>
+        <option value="SHA-1">SHA-1</option>
+        <option value="SHA-384">SHA-384</option>
+        <option value="SHA-512">SHA-512</option>
+      </select>
+      <label class="zt-check" for="encoding">Output</label>
+      <select id="encoding" class="zt-select" aria-label="Output encoding">
+        <option value="hex" selected>Hex (lowercase)</option>
+        <option value="hex-upper">Hex (uppercase)</option>
+        <option value="base64">Base64</option>
+        <option value="base64url">Base64 URL-safe</option>
+      </select>
+      <span class="zt-spacer"></span>
+      <button type="button" id="sample" class="zt-btn">Sample</button>
+      <button type="button" id="clear" class="zt-btn">Clear</button>
+    </div>
+
+    <div class="zt-grid zt-grid-2">
+      <div class="zt-pane">
+        <div class="zt-pane-header">
+          <span class="zt-pane-label">Input text</span>
+        </div>
+        <textarea id="input" class="zt-textarea" placeholder="Enter text to hash…" spellcheck="false" autofocus></textarea>
+        <p class="zt-pane-label" style="margin-top:6px;font-weight:400;text-transform:none;">
+          MD5 not bundled (deprecated). <a href="#" id="open-md5">Open MD5 on web ↗</a>
+        </p>
+      </div>
+      <div class="zt-pane">
+        <div class="zt-pane-header">
+          <span class="zt-pane-label">Hash (<span id="algo-name">SHA-256</span>)</span>
+          <button type="button" id="copy" class="zt-btn" disabled>Copy</button>
+        </div>
+        <textarea id="output" class="zt-textarea" readonly spellcheck="false"></textarea>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="tool.js"></script>
+</body>
+</html>

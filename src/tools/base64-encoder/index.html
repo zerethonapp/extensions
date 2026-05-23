@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Base64 Encoder &amp; Decoder — Zerethon Tools (offline)</title>
+  <link rel="stylesheet" href="../_shell/shell.css" />
+</head>
+<body>
+  <div class="zt-page" id="zt-page">
+    <div class="zt-controls">
+      <div class="zt-segmented" role="tablist" aria-label="Mode">
+        <button type="button" id="m-encode" class="is-on">Encode</button>
+        <button type="button" id="m-decode">Decode</button>
+      </div>
+      <label class="zt-check">
+        <input type="checkbox" id="url-safe" /> URL-safe variant
+      </label>
+      <span class="zt-spacer"></span>
+      <button type="button" id="swap" class="zt-btn">Swap ↔</button>
+      <button type="button" id="sample" class="zt-btn">Sample</button>
+      <button type="button" id="clear" class="zt-btn">Clear</button>
+    </div>
+
+    <div class="zt-grid zt-grid-2">
+      <div class="zt-pane">
+        <div class="zt-pane-header">
+          <span class="zt-pane-label" id="input-label">Input</span>
+        </div>
+        <textarea id="input" class="zt-textarea" placeholder="Text or Base64…" spellcheck="false" autofocus></textarea>
+        <div id="error" class="zt-error" hidden></div>
+      </div>
+      <div class="zt-pane">
+        <div class="zt-pane-header">
+          <span class="zt-pane-label">Output</span>
+          <button type="button" id="copy" class="zt-btn" disabled>Copy</button>
+        </div>
+        <textarea id="output" class="zt-textarea" readonly spellcheck="false"></textarea>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="tool.js"></script>
+</body>
+</html>

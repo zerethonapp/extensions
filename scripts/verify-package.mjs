@@ -18,6 +18,7 @@ const CHECKS = [
   ['all icons present at 16/48/128', checkIcons],
   ['en locale has every __MSG_*__ key used by manifest', checkLocaleCoverage],
   ['locales other than en match the en key set', checkLocaleParity],
+  ['every BUNDLED_SLUGS entry has a tool page in src/tools/', checkBundledTools],
 ];
 
 const fails = [];
@@ -121,6 +122,22 @@ async function checkLocaleParity() {
     const other = JSON.parse(await fs.readFile(path.join(localesDir, e.name, 'messages.json'), 'utf8'));
     const missing = Object.keys(en).filter((k) => !other[k]);
     if (missing.length) throw new Error(`locale ${e.name} missing keys: ${missing.join(', ')}`);
+  }
+}
+
+async function checkBundledTools() {
+  // Avoid importing the registry module directly (would execute chrome.* checks etc.).
+  // Parse the slug literals out of the file with a regex — good enough since the
+  // file is generated and follows a fixed shape.
+  const registrySrc = await fs.readFile(path.join(SRC, 'lib/tools-registry.js'), 'utf8');
+  const setMatch = registrySrc.match(/BUNDLED_SLUGS\s*=\s*new\s+Set\(\s*\[([^\]]*)\]/);
+  if (!setMatch) throw new Error('could not locate BUNDLED_SLUGS in tools-registry.js');
+  const slugs = Array.from(setMatch[1].matchAll(/'([a-z0-9-]+)'|"([a-z0-9-]+)"/g), (m) => m[1] || m[2]);
+  for (const slug of slugs) {
+    const html = path.join(SRC, 'tools', slug, 'index.html');
+    const js = path.join(SRC, 'tools', slug, 'tool.js');
+    if (!(await fs.stat(html).catch(() => null))) throw new Error(`BUNDLED_SLUGS has "${slug}" but tools/${slug}/index.html is missing`);
+    if (!(await fs.stat(js).catch(() => null))) throw new Error(`BUNDLED_SLUGS has "${slug}" but tools/${slug}/tool.js is missing`);
   }
 }
 

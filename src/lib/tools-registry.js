@@ -117,10 +117,19 @@ export const REGISTRY = [
   { slug: "wallet-address-validator", name: "Wallet Address Validator", category: "web3", bundled: false, keywords: ["wallet address validator","ethereum address checker","bitcoin address validator","solana address checker"] }
 ];
 
-// Option A (Companion Launcher): no tools bundled offline; every tool opens on
-// the website. The `bundled: true` flags above are kept so we can flip the set
-// on in v0.2 once usage data tells us which tools deserve offline ports.
-export const BUNDLED_SLUGS = new Set();
+// v0.2 (selective offline bundling): tools listed here run fully inside the
+// extension via src/tools/<slug>/index.html — no network required. The launcher
+// renders the "offline" badge for these and opens them via chrome.runtime.getURL().
+// Everything else still link-outs to https://tools.zerethon.com/<slug>.
+//
+// Picked as universal winners (high search volume + privacy-critical + small
+// port effort). Two more slots reserved for data-driven picks after install
+// telemetry lands — see tickets/phase-6-v0.2-offline/01-pick-offline-set.md.
+export const BUNDLED_SLUGS = new Set([
+  'json-formatter',
+  'base64-encoder',
+  'hash-generator',
+]);
 
 export const CATEGORY_LABEL = {
   developer: 'Developer',

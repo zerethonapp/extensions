@@ -60,6 +60,15 @@ const INCLUDE = [
   'icons/icon128.png',
   '_locales/en/messages.json',
   '_locales/vi/messages.json',
+  // v0.2 bundled offline tools — shared shell + per-tool pages
+  'tools/_shell/shell.css',
+  'tools/_shell/shell.js',
+  'tools/json-formatter/index.html',
+  'tools/json-formatter/tool.js',
+  'tools/base64-encoder/index.html',
+  'tools/base64-encoder/tool.js',
+  'tools/hash-generator/index.html',
+  'tools/hash-generator/tool.js',
 ];
 
 async function main() {

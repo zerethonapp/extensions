@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JSON Formatter — Zerethon Tools (offline)</title>
+  <link rel="stylesheet" href="../_shell/shell.css" />
+</head>
+<body>
+  <div class="zt-page" id="zt-page">
+    <!-- topbar injected by JS -->
+    <div class="zt-controls">
+      <div class="zt-segmented" role="tablist" aria-label="Mode">
+        <button type="button" id="m-pretty" class="is-on">Pretty</button>
+        <button type="button" id="m-minify">Minify</button>
+      </div>
+      <label class="zt-check" for="indent">Indent</label>
+      <select id="indent" class="zt-select" aria-label="Indent size">
+        <option value="2" selected>2 spaces</option>
+        <option value="4">4 spaces</option>
+        <option value="tab">Tab</option>
+      </select>
+      <label class="zt-check">
+        <input type="checkbox" id="sort-keys" /> Sort keys
+      </label>
+      <span class="zt-spacer"></span>
+      <button type="button" id="sample" class="zt-btn" title="Insert a sample payload">Sample</button>
+      <button type="button" id="clear" class="zt-btn">Clear</button>
+    </div>
+
+    <div class="zt-grid zt-grid-2">
+      <div class="zt-pane">
+        <div class="zt-pane-header">
+          <span class="zt-pane-label">Input</span>
+        </div>
+        <textarea id="input" class="zt-textarea" placeholder="Paste JSON…" spellcheck="false" autofocus></textarea>
+        <div id="error" class="zt-error" hidden></div>
+      </div>
+      <div class="zt-pane">
+        <div class="zt-pane-header">
+          <span class="zt-pane-label">Output</span>
+          <button type="button" id="copy" class="zt-btn" disabled>Copy</button>
+        </div>
+        <textarea id="output" class="zt-textarea" readonly spellcheck="false"></textarea>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="tool.js"></script>
+</body>
+</html>

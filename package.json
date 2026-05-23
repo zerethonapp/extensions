@@ -1,6 +1,6 @@
 {
   "name": "zerethon-tools-extension",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Browser extension launcher + offline toolkit for tools.zerethon.com (Manifest V3).",
   "homepage": "https://tools.zerethon.com/extension",
