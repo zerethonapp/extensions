@@ -29,6 +29,30 @@ export function queryParam(name) {
   catch { return null; }
 }
 
+/* Encode text to URL-safe base64 for ?input= params.
+   Inverse of decodePrefill(). Used when navigating off-extension so the
+   destination tool page on tools.zerethon.com prefills the input box. */
+export function toUrlSafeBase64(str) {
+  if (!str) return '';
+  const bytes = new TextEncoder().encode(str);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+/* Build the canonical "open this tool on the website" URL with optional
+   prefill + extra params. ref/src defaulted so we can measure ext-driven traffic. */
+export function buildWebUrl(slug, { input = '', extras = {}, src = 'bundled-link' } = {}) {
+  const u = new URL(`${BASE_URL}/${slug}`);
+  u.searchParams.set('ref', 'ext');
+  u.searchParams.set('src', src);
+  for (const [k, v] of Object.entries(extras)) {
+    if (v != null && v !== '') u.searchParams.set(k, String(v));
+  }
+  if (input) u.searchParams.set('input', toUrlSafeBase64(input));
+  return u.toString();
+}
+
 /* ---------- clipboard + toast ---------- */
 
 let toastEl = null;
@@ -71,11 +95,19 @@ export function $$(sel, root = document) { return Array.from(root.querySelectorA
 /* ---------- top-bar markup factory ----------
    Mirrors the live-site header in spirit: Z brand mark + name on the left,
    tool title in the middle, OFFLINE pill + "Open on web" on the right.
-   Sticky + backdrop-blur is in shell.css. */
+   Sticky + backdrop-blur is in shell.css.
 
-export function mountTopbar({ title, slug }) {
+   The `webHrefBuilder` callback (optional) is invoked at click time on the
+   "Open on web" link so the destination URL carries the user's current input
+   as a ?input=<urlsafe-base64> param — opening the website with the same
+   content already loaded instead of an empty form. */
+
+export function mountTopbar({ title, slug, webHrefBuilder }) {
   const bar = document.createElement('header');
   bar.className = 'zt-topbar';
+  const initialHref = webHrefBuilder
+    ? webHrefBuilder()
+    : `${BASE_URL}/${encodeURIComponent(slug)}?ref=ext&src=bundled`;
   bar.innerHTML = `
     <a class="zt-brand" href="${escapeHtml(BASE_URL)}/?ref=ext&src=bundled-brand" target="_blank" rel="noopener" title="Open tools.zerethon.com">
       <span class="zt-z" aria-hidden="true">Z</span>
@@ -84,10 +116,17 @@ export function mountTopbar({ title, slug }) {
     <span class="zt-divider" aria-hidden="true"></span>
     <h1>${escapeHtml(title)}</h1>
     <span class="zt-offline-pill" title="Runs inside the extension — no network">offline</span>
-    <a class="zt-web-link" href="${escapeHtml(BASE_URL)}/${encodeURIComponent(slug)}?ref=ext&src=bundled" target="_blank" rel="noopener">
+    <a class="zt-web-link" href="${escapeHtml(initialHref)}" target="_blank" rel="noopener">
       Open on web ↗
     </a>
   `;
+  if (webHrefBuilder) {
+    const link = bar.querySelector('.zt-web-link');
+    // Refresh href just before navigation so it always reflects the current input.
+    link.addEventListener('mousedown', () => { link.href = webHrefBuilder(); });
+    link.addEventListener('auxclick', () => { link.href = webHrefBuilder(); }); // middle-click
+    link.addEventListener('contextmenu', () => { link.href = webHrefBuilder(); }); // right-click copy-link
+  }
   return bar;
 }
 

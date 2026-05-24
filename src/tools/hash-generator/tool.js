@@ -1,6 +1,5 @@
-import { $, copy, decodePrefill, flashSuccess, mountTopbar, toggleFullscreen } from '../_shell/shell.js';
+import { $, buildWebUrl, copy, decodePrefill, flashSuccess, mountTopbar, toggleFullscreen } from '../_shell/shell.js';
 import { iconBtn } from '../_shell/icons.js';
-import { BASE_URL } from '../../lib/config.js';
 
 const SLUG = 'hash-generator';
 const SAMPLE = 'The quick brown fox jumps over the lazy dog';
@@ -21,7 +20,14 @@ const els = {
   grid: $('#grid'),
 };
 
-$('#zt-page').prepend(mountTopbar({ title: 'Hash Generator', slug: SLUG }));
+$('#zt-page').prepend(mountTopbar({
+  title: 'Hash Generator',
+  slug: SLUG,
+  webHrefBuilder: () => buildWebUrl(SLUG, {
+    input: els.input.value,
+    extras: { algo: els.algo.value, encoding: els.encoding.value },
+  }),
+}));
 
 els.inputActions.innerHTML = [
   iconBtn({ id: 'in-copy', iconName: 'clipboard', title: 'Copy input', disabled: true }),
@@ -113,7 +119,11 @@ document.addEventListener('keydown', (e) => {
 
 els.openMd5.addEventListener('click', (e) => {
   e.preventDefault();
-  window.open(`${BASE_URL}/md5-hash-generator?ref=ext&src=bundled-fallback`, '_blank', 'noopener');
+  const url = buildWebUrl('md5-hash-generator', {
+    input: els.input.value,
+    src: 'bundled-md5-fallback',
+  });
+  window.open(url, '_blank', 'noopener');
 });
 
 // Context-menu / omnibox prefill

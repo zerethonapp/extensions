@@ -1,6 +1,5 @@
-import { $, copy, decodePrefill, downloadText, flashSuccess, mountTopbar, toast, toggleFullscreen } from '../_shell/shell.js';
-import { iconBtn, Icons } from '../_shell/icons.js';
-import { BASE_URL } from '../../lib/config.js';
+import { $, buildWebUrl, copy, decodePrefill, downloadText, flashSuccess, mountTopbar, toast, toggleFullscreen } from '../_shell/shell.js';
+import { iconBtn } from '../_shell/icons.js';
 
 const SLUG = 'json-formatter';
 const SAMPLE = `{
@@ -14,6 +13,7 @@ const SAMPLE = `{
 const els = {
   input: $('#input'),
   output: $('#output'),
+  outputTree: $('#output-tree'),
   err: $('#error'),
   indent: $('#indent'),
   sortKeys: $('#sort-keys'),
@@ -33,8 +33,16 @@ const els = {
 
 let mode = 'pretty';
 let parsedStats = null;
+let parsedValue = null;
 
-$('#zt-page').prepend(mountTopbar({ title: 'JSON Formatter', slug: SLUG }));
+$('#zt-page').prepend(mountTopbar({
+  title: 'JSON Formatter',
+  slug: SLUG,
+  webHrefBuilder: () => buildWebUrl(SLUG, {
+    input: els.input.value,
+    extras: { view: mode === 'tree' ? 'tree' : undefined },
+  }),
+}));
 
 /* ---------- pane toolbars ---------- */
 
@@ -64,13 +72,14 @@ const btn = {
 /* ---------- core ---------- */
 
 function setMode(next) {
-  if (next === 'tree') {
-    window.open(`${BASE_URL}/${SLUG}?ref=ext&src=bundled-tree-redirect`, '_blank', 'noopener');
-    return;
-  }
   mode = next;
   els.mPretty.classList.toggle('is-on', mode === 'pretty');
   els.mMinify.classList.toggle('is-on', mode === 'minify');
+  els.mTree.classList.toggle('is-on', mode === 'tree');
+  // Swap which output surface is visible. Textarea for pretty/minify,
+  // <div> tree for tree mode.
+  els.output.hidden = mode === 'tree';
+  els.outputTree.hidden = mode !== 'tree';
   format();
 }
 
@@ -103,8 +112,10 @@ function format() {
   const text = els.input.value;
   if (!text.trim()) {
     els.output.value = '';
+    els.outputTree.innerHTML = '';
     els.err.hidden = true;
     parsedStats = null;
+    parsedValue = null;
     refreshButtons();
     refreshStats();
     return;
@@ -112,10 +123,18 @@ function format() {
   try {
     const replacer = els.sortKeys.checked ? sortKeysReplacer : null;
     const parsed = JSON.parse(text);
-    parsedStats = computeStats(parsed);
-    els.output.value = mode === 'minify'
-      ? JSON.stringify(parsed, replacer)
-      : JSON.stringify(parsed, replacer, indentValue());
+    parsedValue = els.sortKeys.checked ? JSON.parse(JSON.stringify(parsed, replacer)) : parsed;
+    parsedStats = computeStats(parsedValue);
+
+    if (mode === 'tree') {
+      els.output.value = '';                          // textarea hidden anyway
+      els.outputTree.innerHTML = renderTree(parsedValue);
+    } else {
+      els.outputTree.innerHTML = '';
+      els.output.value = mode === 'minify'
+        ? JSON.stringify(parsedValue)
+        : JSON.stringify(parsedValue, null, indentValue());
+    }
     els.err.hidden = true;
   } catch (e) {
     const msg = e?.message || String(e);
@@ -131,21 +150,84 @@ function format() {
     els.err.textContent = `Parse error${where}: ${msg}`;
     els.err.hidden = false;
     els.output.value = '';
+    els.outputTree.innerHTML = '';
     parsedStats = null;
+    parsedValue = null;
   }
   refreshButtons();
   refreshStats();
 }
 
+/* ---------- tree renderer (native <details> based — zero JS for collapse) ---------- */
+
+function renderTree(value) {
+  return `<div>${renderNode(value, null, true)}</div>`;
+}
+
+function renderNode(value, key, isRoot) {
+  if (value === null) return wrap(key, `<span class="tt-null">null</span>`, isRoot);
+  if (typeof value === 'boolean') return wrap(key, `<span class="tt-bool">${value}</span>`, isRoot);
+  if (typeof value === 'number') return wrap(key, `<span class="tt-num">${value}</span>`, isRoot);
+  if (typeof value === 'string') return wrap(key, `<span class="tt-str">"${escapeHtml(value)}"</span>`, isRoot);
+
+  if (Array.isArray(value)) {
+    if (value.length === 0) return wrap(key, `<span class="tt-bracket">[]</span>`, isRoot);
+    const head = `<span class="tt-bracket">[${value.length}]</span>`;
+    const items = value.map((v, i) => `<li>${renderNode(v, String(i), false)}</li>`).join('');
+    return collapsible(key, head, `<ul>${items}</ul>`, isRoot);
+  }
+
+  if (typeof value === 'object') {
+    const keys = Object.keys(value);
+    if (keys.length === 0) return wrap(key, `<span class="tt-bracket">{}</span>`, isRoot);
+    const head = `<span class="tt-bracket">{${keys.length}}</span>`;
+    const items = keys.map((k) => `<li>${renderNode(value[k], k, false)}</li>`).join('');
+    return collapsible(key, head, `<ul>${items}</ul>`, isRoot);
+  }
+
+  return wrap(key, escapeHtml(String(value)), isRoot);
+}
+
+function wrap(key, valueHtml, isRoot) {
+  if (isRoot || key === null) return valueHtml;
+  // Number keys (array indices) shown without quotes for readability.
+  const isIndex = /^\d+$/.test(key);
+  const keyHtml = isIndex ? `<span class="tt-key">${key}</span>` : `<span class="tt-key">"${escapeHtml(key)}"</span>`;
+  return `${keyHtml}: ${valueHtml}`;
+}
+
+function collapsible(key, headHtml, bodyHtml, isRoot) {
+  const isIndex = key !== null && /^\d+$/.test(key);
+  const keyHtml = isRoot || key === null
+    ? ''
+    : (isIndex
+      ? `<span class="tt-key">${key}</span>: `
+      : `<span class="tt-key">"${escapeHtml(key)}"</span>: `);
+  return `<details open><summary>${keyHtml}${headHtml}</summary>${bodyHtml}</details>`;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
 function refreshButtons() {
   const hasInput = !!els.input.value;
-  const hasOutput = !!els.output.value;
+  // In tree mode the textarea is empty by design — gate output buttons on
+  // whether we have a parsed value instead, since copy/download produce JSON.
+  const hasOutput = mode === 'tree' ? parsedValue !== null : !!els.output.value;
   btn.inBeautify.disabled = !parsedStats;
   btn.inMinify.disabled = !parsedStats;
   btn.inCopy.disabled = !hasInput;
   btn.outCopy.disabled = !hasOutput;
   btn.outDownload.disabled = !hasOutput;
   els.inputMeta.textContent = hasInput ? formatBytes(new Blob([els.input.value]).size) : '';
+}
+
+function currentOutputText() {
+  if (mode === 'tree' && parsedValue !== null) {
+    return JSON.stringify(parsedValue, null, indentValue());
+  }
+  return els.output.value;
 }
 
 function refreshStats() {
@@ -196,11 +278,13 @@ btn.inCopy.addEventListener('click', async () => {
   if (await copy(els.input.value)) flashSuccess(btn.inCopy);
 });
 btn.outCopy.addEventListener('click', async () => {
-  if (await copy(els.output.value)) flashSuccess(btn.outCopy);
+  const text = currentOutputText();
+  if (text && await copy(text)) flashSuccess(btn.outCopy);
 });
 btn.outDownload.addEventListener('click', () => {
-  if (!els.output.value) return;
-  downloadText('formatted.json', els.output.value, 'application/json');
+  const text = currentOutputText();
+  if (!text) return;
+  downloadText('formatted.json', text, 'application/json');
   toast('Downloaded', 'success');
 });
 

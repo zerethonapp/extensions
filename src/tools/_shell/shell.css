@@ -395,6 +395,51 @@ body {
 }
 .zt-grid.has-fullscreen .zt-pane:not(.is-fullscreen) { display: none; }
 
+/* Tree view (JSON Formatter) — uses native <details> for collapse so we
+   don't need any JS toggle logic. Colors mirror common JSON tree palettes
+   used by browser DevTools and the live-site renderer. */
+.zt-tree {
+  flex: 1;
+  min-height: 200px;
+  padding: 12px 16px;
+  background: var(--zt-bg-input);
+  font: 13px/1.6 ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, monospace;
+  overflow: auto;
+  color: var(--zt-text);
+}
+.zt-tree:empty::before {
+  content: 'Paste JSON to see the tree.';
+  color: var(--zt-text-soft);
+  opacity: 0.6;
+}
+.zt-tree ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 18px;
+  border-left: 1px dashed var(--zt-border);
+}
+.zt-tree details > summary {
+  cursor: pointer;
+  list-style: revert;
+  user-select: none;
+}
+.zt-tree details > summary::-webkit-details-marker { color: var(--zt-text-soft); }
+.zt-tree details[open] > summary .tt-preview { display: none; }
+.zt-tree .tt-preview { color: var(--zt-text-soft); margin-left: 6px; font-style: italic; }
+.zt-tree .tt-key { color: #60a5fa; }                      /* blue keys */
+.zt-tree .tt-bracket { color: var(--zt-text-soft); }
+.zt-tree .tt-str { color: #f97316; }                      /* orange strings */
+.zt-tree .tt-num { color: #22c55e; }                      /* green numbers */
+.zt-tree .tt-bool { color: #a855f7; }                     /* purple booleans */
+.zt-tree .tt-null { color: #9ca3af; font-style: italic; } /* gray null */
+@media (prefers-color-scheme: light) {
+  .zt-tree .tt-key { color: #2563eb; }
+  .zt-tree .tt-str { color: #ea580c; }
+  .zt-tree .tt-num { color: #16a34a; }
+  .zt-tree .tt-bool { color: #9333ea; }
+  .zt-tree .tt-null { color: #6b7280; }
+}
+
 .zt-error {
   margin-top: 4px;
   padding: 6px 10px;

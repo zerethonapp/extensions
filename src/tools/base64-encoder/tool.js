@@ -1,4 +1,4 @@
-import { $, copy, decodePrefill, flashSuccess, mountTopbar, queryParam, toggleFullscreen } from '../_shell/shell.js';
+import { $, buildWebUrl, copy, decodePrefill, flashSuccess, mountTopbar, queryParam, toggleFullscreen } from '../_shell/shell.js';
 import { iconBtn } from '../_shell/icons.js';
 
 const SLUG = 'base64-encoder';
@@ -24,7 +24,14 @@ const els = {
 
 let mode = 'encode';
 
-$('#zt-page').prepend(mountTopbar({ title: 'Base64 Encoder & Decoder', slug: SLUG }));
+$('#zt-page').prepend(mountTopbar({
+  title: 'Base64 Encoder & Decoder',
+  slug: SLUG,
+  webHrefBuilder: () => buildWebUrl(SLUG, {
+    input: els.input.value,
+    extras: { mode, 'url-safe': els.urlSafe.checked ? '1' : undefined },
+  }),
+}));
 
 els.inputActions.innerHTML = [
   iconBtn({ id: 'in-swap', iconName: 'arrowsLeftRight', title: 'Swap input ↔ output' }),
