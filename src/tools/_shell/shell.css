@@ -39,48 +39,117 @@ html, body {
   background: var(--zt-bg);
   color: var(--zt-text);
   font: 14px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 
+/* Page wrapper — flex column that fills the body so the textarea grows
+   to the available viewport height instead of getting stuck at 280 px. */
 .zt-page {
-  max-width: 1100px;
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 0 16px 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
+/* Site-style sticky brand bar — mirrors tools.zerethon.com header:
+   white/dark glass background with backdrop blur, Z mark in brand colour. */
 .zt-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+  margin: 0 -16px 16px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.85);
   border-bottom: 1px solid var(--zt-border);
+  backdrop-filter: saturate(180%) blur(8px);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+}
+@media (prefers-color-scheme: dark) {
+  .zt-topbar { background: rgba(11, 16, 32, 0.85); }
+}
+
+.zt-topbar .zt-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--zt-text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.zt-topbar .zt-brand:hover { color: var(--zt-accent); }
+.zt-topbar .zt-brand:hover .zt-z { background: var(--zt-accent); }
+
+.zt-topbar .zt-z {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--zt-accent);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  transition: background 80ms;
+}
+
+.zt-topbar .zt-brand-text { display: none; }
+@media (min-width: 480px) {
+  .zt-topbar .zt-brand-text { display: inline; }
+}
+
+.zt-topbar .zt-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--zt-border);
 }
 
 .zt-topbar h1 {
   margin: 0;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
+  color: var(--zt-text);
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .zt-topbar .zt-offline-pill {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   padding: 3px 8px;
   border-radius: 999px;
   background: var(--zt-accent-soft);
   color: var(--zt-accent);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  white-space: nowrap;
 }
 
-.zt-topbar a {
+.zt-topbar a.zt-web-link {
   font-size: 12px;
   color: var(--zt-text-soft);
   text-decoration: none;
+  white-space: nowrap;
 }
-.zt-topbar a:hover { color: var(--zt-accent); text-decoration: underline; }
+.zt-topbar a.zt-web-link:hover { color: var(--zt-accent); text-decoration: underline; }
 
 .zt-controls {
   display: flex;
@@ -162,6 +231,8 @@ html, body {
   display: grid;
   gap: 12px;
   grid-template-columns: 1fr;
+  flex: 1;
+  min-height: 0;       /* lets grid children shrink so flex parents can size them */
 }
 @media (min-width: 768px) {
   .zt-grid.zt-grid-2 { grid-template-columns: 1fr 1fr; }
@@ -171,6 +242,7 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-height: 0;
 }
 
 .zt-pane-header {
@@ -189,14 +261,15 @@ html, body {
 
 .zt-textarea {
   width: 100%;
-  min-height: 280px;
+  flex: 1;                          /* fills the remaining height inside .zt-pane */
+  min-height: 240px;                /* sane floor on tiny windows */
   padding: 10px 12px;
   border: 1px solid var(--zt-border);
   border-radius: var(--zt-radius);
   background: var(--zt-bg-input);
   color: var(--zt-text);
   font: 13px/1.5 ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, monospace;
-  resize: vertical;
+  resize: none;                     /* height is driven by flex now */
 }
 .zt-textarea:focus { outline: 2px solid var(--zt-accent); outline-offset: -1px; border-color: var(--zt-accent); }
 .zt-textarea[readonly] { background: var(--zt-bg-soft); }

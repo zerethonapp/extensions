@@ -68,15 +68,23 @@ export async function copy(text) {
 export function $(sel, root = document) { return root.querySelector(sel); }
 export function $$(sel, root = document) { return Array.from(root.querySelectorAll(sel)); }
 
-/* ---------- top-bar markup factory ---------- */
+/* ---------- top-bar markup factory ----------
+   Mirrors the live-site header in spirit: Z brand mark + name on the left,
+   tool title in the middle, OFFLINE pill + "Open on web" on the right.
+   Sticky + backdrop-blur is in shell.css. */
 
 export function mountTopbar({ title, slug }) {
   const bar = document.createElement('header');
   bar.className = 'zt-topbar';
   bar.innerHTML = `
+    <a class="zt-brand" href="${escapeHtml(BASE_URL)}/?ref=ext&src=bundled-brand" target="_blank" rel="noopener" title="Open tools.zerethon.com">
+      <span class="zt-z" aria-hidden="true">Z</span>
+      <span class="zt-brand-text">Zerethon Tools</span>
+    </a>
+    <span class="zt-divider" aria-hidden="true"></span>
     <h1>${escapeHtml(title)}</h1>
     <span class="zt-offline-pill" title="Runs inside the extension — no network">offline</span>
-    <a href="${escapeHtml(BASE_URL)}/${encodeURIComponent(slug)}?ref=ext&src=bundled" target="_blank" rel="noopener">
+    <a class="zt-web-link" href="${escapeHtml(BASE_URL)}/${encodeURIComponent(slug)}?ref=ext&src=bundled" target="_blank" rel="noopener">
       Open on web ↗
     </a>
   `;
