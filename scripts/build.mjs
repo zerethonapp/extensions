@@ -63,6 +63,7 @@ const INCLUDE = [
   // v0.2 bundled offline tools — shared shell + per-tool pages
   'tools/_shell/shell.css',
   'tools/_shell/shell.js',
+  'tools/_shell/icons.js',
   'tools/json-formatter/index.html',
   'tools/json-formatter/tool.js',
   'tools/base64-encoder/index.html',

@@ -94,3 +94,30 @@ export function mountTopbar({ title, slug }) {
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
+
+/* ---------- pane fullscreen toggle + flash ---------- */
+
+export function toggleFullscreen(paneEl, gridEl) {
+  if (!paneEl) return;
+  const wasOn = paneEl.classList.toggle('is-fullscreen');
+  gridEl?.classList.toggle('has-fullscreen', wasOn);
+}
+
+export function flashSuccess(btn, ms = 1200) {
+  btn.classList.add('is-flashed');
+  setTimeout(() => btn.classList.remove('is-flashed'), ms);
+}
+
+/* ---------- download blob helper ---------- */
+
+export function downloadText(filename, text, mime = 'text/plain') {
+  const blob = new Blob([text], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}

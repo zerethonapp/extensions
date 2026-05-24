@@ -161,6 +161,7 @@ body {
   border: 1px solid var(--zt-border);
   border-radius: var(--zt-radius);
   background: var(--zt-bg-soft);
+  flex-shrink: 0;            /* don't squish controls when textarea grows */
 }
 
 .zt-controls .zt-spacer { flex: 1; }
@@ -241,38 +242,158 @@ body {
 .zt-pane {
   display: flex;
   flex-direction: column;
-  gap: 6px;
   min-height: 0;
+  border: 1px solid var(--zt-border);
+  border-radius: var(--zt-radius);
+  overflow: hidden;
+  background: var(--zt-bg-input);
 }
 
-.zt-pane-header {
+/* Per-pane toolbar — mirrors the live-site pane header.
+   Left slot: label or segmented mode tabs. Right slot: icon buttons. */
+.zt-pane-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--zt-border);
+  background: var(--zt-bg-soft);
+  flex-shrink: 0;
+}
+
+.zt-pane-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.zt-pane-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 2px;
 }
 
 .zt-pane-label {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--zt-text);
+}
+
+.zt-pane-meta {
+  font-size: 11px;
   color: var(--zt-text-soft);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  margin-right: 6px;
+  white-space: nowrap;
+}
+
+/* Square icon button used inside pane toolbars and controls bars. */
+.zt-icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--zt-text-soft);
+  cursor: pointer;
+  transition: background 80ms, color 80ms;
+  padding: 0;
+}
+.zt-icon-btn svg { width: 16px; height: 16px; }
+.zt-icon-btn:hover {
+  background: rgba(108, 176, 255, 0.12);
+  color: var(--zt-accent);
+}
+.zt-icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.zt-icon-btn:disabled:hover {
+  background: transparent;
+  color: var(--zt-text-soft);
+}
+.zt-icon-btn.is-on {
+  background: var(--zt-accent-soft);
+  color: var(--zt-accent);
+}
+.zt-icon-btn.is-flashed {
+  background: var(--zt-success);
+  color: white;
+}
+
+/* Smaller segmented control for pane toolbars (matches site's inline tabs). */
+.zt-segmented-sm {
+  display: inline-flex;
+  background: var(--zt-bg);
+  border: 1px solid var(--zt-border);
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 1px;
+}
+.zt-segmented-sm button {
+  padding: 3px 9px;
+  border: 0;
+  background: transparent;
+  color: var(--zt-text-soft);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.zt-segmented-sm button.is-on {
+  background: var(--zt-accent);
+  color: white;
 }
 
 .zt-textarea {
   width: 100%;
   flex: 1;                          /* fills the remaining height inside .zt-pane */
-  min-height: 240px;                /* sane floor on tiny windows */
+  min-height: 200px;                /* sane floor on tiny windows */
   padding: 10px 12px;
-  border: 1px solid var(--zt-border);
-  border-radius: var(--zt-radius);
+  border: 0;                        /* parent .zt-pane owns the border now */
+  border-radius: 0;
   background: var(--zt-bg-input);
   color: var(--zt-text);
   font: 13px/1.5 ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, monospace;
-  resize: none;                     /* height is driven by flex now */
+  resize: none;
 }
-.zt-textarea:focus { outline: 2px solid var(--zt-accent); outline-offset: -1px; border-color: var(--zt-accent); }
+.zt-textarea:focus {
+  outline: none;
+}
+.zt-pane:focus-within {
+  border-color: var(--zt-accent);
+  box-shadow: 0 0 0 1px var(--zt-accent);
+}
 .zt-textarea[readonly] { background: var(--zt-bg-soft); }
+.zt-textarea::placeholder { color: var(--zt-text-soft); opacity: 0.6; }
+
+/* Stats strip — bottom-of-page byte/keys/depth counts. */
+.zt-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 10px;
+  padding: 6px 4px;
+  font-size: 11px;
+  color: var(--zt-text-soft);
+  flex-shrink: 0;
+}
+.zt-stats kbd { font-size: 10px; }
+.zt-stats .zt-stats-spacer { margin-left: auto; }
+.zt-stats strong { color: var(--zt-text); font-weight: 600; }
+
+/* Fullscreen — one pane fills the viewport, hide siblings. */
+.zt-pane.is-fullscreen {
+  position: fixed;
+  inset: 16px;
+  z-index: 50;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  border-color: var(--zt-accent);
+}
+.zt-grid.has-fullscreen .zt-pane:not(.is-fullscreen) { display: none; }
 
 .zt-error {
   margin-top: 4px;

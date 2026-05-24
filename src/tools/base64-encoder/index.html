@@ -8,6 +8,8 @@
 </head>
 <body>
   <div class="zt-page" id="zt-page">
+    <!-- topbar injected by JS -->
+
     <div class="zt-controls">
       <div class="zt-segmented" role="tablist" aria-label="Mode">
         <button type="button" id="m-encode" class="is-on">Encode</button>
@@ -17,26 +19,31 @@
         <input type="checkbox" id="url-safe" /> URL-safe variant
       </label>
       <span class="zt-spacer"></span>
-      <button type="button" id="swap" class="zt-btn">Swap ↔</button>
       <button type="button" id="sample" class="zt-btn">Sample</button>
       <button type="button" id="clear" class="zt-btn">Clear</button>
     </div>
 
-    <div class="zt-grid zt-grid-2">
-      <div class="zt-pane">
-        <div class="zt-pane-header">
-          <span class="zt-pane-label" id="input-label">Input</span>
-        </div>
-        <textarea id="input" class="zt-textarea" placeholder="Text or Base64…" spellcheck="false" autofocus></textarea>
+    <div class="zt-grid zt-grid-2" id="grid">
+      <section class="zt-pane" id="pane-input">
+        <header class="zt-pane-toolbar">
+          <div class="zt-pane-toolbar-left">
+            <span class="zt-pane-label" id="input-label">Plain text</span>
+          </div>
+          <div class="zt-pane-toolbar-right" id="input-actions"></div>
+        </header>
+        <textarea id="input" class="zt-textarea" placeholder="Paste text to encode…" spellcheck="false" autofocus></textarea>
         <div id="error" class="zt-error" hidden></div>
-      </div>
-      <div class="zt-pane">
-        <div class="zt-pane-header">
-          <span class="zt-pane-label">Output</span>
-          <button type="button" id="copy" class="zt-btn" disabled>Copy</button>
-        </div>
-        <textarea id="output" class="zt-textarea" readonly spellcheck="false"></textarea>
-      </div>
+      </section>
+
+      <section class="zt-pane" id="pane-output">
+        <header class="zt-pane-toolbar">
+          <div class="zt-pane-toolbar-left">
+            <span class="zt-pane-label">Output</span>
+          </div>
+          <div class="zt-pane-toolbar-right" id="output-actions"></div>
+        </header>
+        <textarea id="output" class="zt-textarea" readonly spellcheck="false" placeholder="Encoded / decoded result will appear here…"></textarea>
+      </section>
     </div>
   </div>
   <script type="module" src="tool.js"></script>

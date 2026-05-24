@@ -9,11 +9,9 @@
 <body>
   <div class="zt-page" id="zt-page">
     <!-- topbar injected by JS -->
+
+    <!-- Settings bar -->
     <div class="zt-controls">
-      <div class="zt-segmented" role="tablist" aria-label="Mode">
-        <button type="button" id="m-pretty" class="is-on">Pretty</button>
-        <button type="button" id="m-minify">Minify</button>
-      </div>
       <label class="zt-check" for="indent">Indent</label>
       <select id="indent" class="zt-select" aria-label="Indent size">
         <option value="2" selected>2 spaces</option>
@@ -28,21 +26,45 @@
       <button type="button" id="clear" class="zt-btn">Clear</button>
     </div>
 
-    <div class="zt-grid zt-grid-2">
-      <div class="zt-pane">
-        <div class="zt-pane-header">
-          <span class="zt-pane-label">Input</span>
-        </div>
-        <textarea id="input" class="zt-textarea" placeholder="Paste JSON…" spellcheck="false" autofocus></textarea>
+    <!-- Workspace grid -->
+    <div class="zt-grid zt-grid-2" id="grid">
+      <!-- INPUT PANE -->
+      <section class="zt-pane" id="pane-input">
+        <header class="zt-pane-toolbar" id="toolbar-input">
+          <div class="zt-pane-toolbar-left">
+            <span class="zt-pane-label">Input</span>
+            <span class="zt-pane-meta" id="input-meta"></span>
+          </div>
+          <div class="zt-pane-toolbar-right" id="input-actions">
+            <!-- icon buttons injected by JS -->
+          </div>
+        </header>
+        <textarea id="input" class="zt-textarea" placeholder='{ "paste": "your JSON here" }' spellcheck="false" autofocus></textarea>
         <div id="error" class="zt-error" hidden></div>
-      </div>
-      <div class="zt-pane">
-        <div class="zt-pane-header">
-          <span class="zt-pane-label">Output</span>
-          <button type="button" id="copy" class="zt-btn" disabled>Copy</button>
-        </div>
-        <textarea id="output" class="zt-textarea" readonly spellcheck="false"></textarea>
-      </div>
+      </section>
+
+      <!-- OUTPUT PANE -->
+      <section class="zt-pane" id="pane-output">
+        <header class="zt-pane-toolbar" id="toolbar-output">
+          <div class="zt-pane-toolbar-left">
+            <div class="zt-segmented-sm" role="tablist" aria-label="Output mode">
+              <button type="button" id="m-pretty" class="is-on">Pretty</button>
+              <button type="button" id="m-minify">Minified</button>
+              <button type="button" id="m-tree" title="Tree view opens on the website">Tree ↗</button>
+            </div>
+          </div>
+          <div class="zt-pane-toolbar-right" id="output-actions">
+            <!-- icon buttons injected by JS -->
+          </div>
+        </header>
+        <textarea id="output" class="zt-textarea" readonly spellcheck="false" placeholder="Formatted output will appear here…"></textarea>
+      </section>
+    </div>
+
+    <!-- Stats strip -->
+    <div class="zt-stats" id="stats">
+      <span class="zt-stats-spacer"></span>
+      <span><kbd>⌘↵</kbd> format · <kbd>Esc</kbd> exit fullscreen</span>
     </div>
   </div>
   <script type="module" src="tool.js"></script>

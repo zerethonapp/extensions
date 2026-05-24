@@ -8,6 +8,8 @@
 </head>
 <body>
   <div class="zt-page" id="zt-page">
+    <!-- topbar injected by JS -->
+
     <div class="zt-controls">
       <label class="zt-check" for="algo">Algorithm</label>
       <select id="algo" class="zt-select" aria-label="Hash algorithm">
@@ -28,23 +30,30 @@
       <button type="button" id="clear" class="zt-btn">Clear</button>
     </div>
 
-    <div class="zt-grid zt-grid-2">
-      <div class="zt-pane">
-        <div class="zt-pane-header">
-          <span class="zt-pane-label">Input text</span>
-        </div>
+    <div class="zt-grid zt-grid-2" id="grid">
+      <section class="zt-pane" id="pane-input">
+        <header class="zt-pane-toolbar">
+          <div class="zt-pane-toolbar-left">
+            <span class="zt-pane-label">Input text</span>
+          </div>
+          <div class="zt-pane-toolbar-right" id="input-actions"></div>
+        </header>
         <textarea id="input" class="zt-textarea" placeholder="Enter text to hash…" spellcheck="false" autofocus></textarea>
-        <p class="zt-pane-label" style="margin-top:6px;font-weight:400;text-transform:none;">
-          MD5 not bundled (deprecated). <a href="#" id="open-md5">Open MD5 on web ↗</a>
+        <p style="margin: 8px 12px 10px; font-size: 11px; color: var(--zt-text-soft);">
+          MD5 not bundled (deprecated; Web Crypto doesn't ship it).
+          <a href="#" id="open-md5" style="color: var(--zt-accent); text-decoration: underline;">Open MD5 on web ↗</a>
         </p>
-      </div>
-      <div class="zt-pane">
-        <div class="zt-pane-header">
-          <span class="zt-pane-label">Hash (<span id="algo-name">SHA-256</span>)</span>
-          <button type="button" id="copy" class="zt-btn" disabled>Copy</button>
-        </div>
-        <textarea id="output" class="zt-textarea" readonly spellcheck="false"></textarea>
-      </div>
+      </section>
+
+      <section class="zt-pane" id="pane-output">
+        <header class="zt-pane-toolbar">
+          <div class="zt-pane-toolbar-left">
+            <span class="zt-pane-label">Hash · <span id="algo-name">SHA-256</span></span>
+          </div>
+          <div class="zt-pane-toolbar-right" id="output-actions"></div>
+        </header>
+        <textarea id="output" class="zt-textarea" readonly spellcheck="false" placeholder="Hash will appear here…"></textarea>
+      </section>
     </div>
   </div>
   <script type="module" src="tool.js"></script>
