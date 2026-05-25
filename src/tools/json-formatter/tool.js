@@ -1,4 +1,4 @@
-import { $, buildWebUrl, copy, decodePrefill, downloadText, flashSuccess, mountTopbar, toast, toggleFullscreen } from '../_shell/shell.js';
+import { $, attachGutter, buildWebUrl, copy, decodePrefill, downloadText, flashSuccess, mountTopbar, toast, toggleFullscreen } from '../_shell/shell.js';
 import { iconBtn } from '../_shell/icons.js';
 
 const SLUG = 'json-formatter';
@@ -43,6 +43,10 @@ $('#zt-page').prepend(mountTopbar({
     extras: { view: mode === 'tree' ? 'tree' : undefined },
   }),
 }));
+
+/* Line-number gutters — input shows red-highlighted line on parse error. */
+const inputGutter = attachGutter(els.input);
+const outputGutter = attachGutter(els.output);
 
 /* ---------- pane toolbars ---------- */
 
@@ -116,6 +120,8 @@ function format() {
     els.err.hidden = true;
     parsedStats = null;
     parsedValue = null;
+    inputGutter.clearError();
+    outputGutter.refresh();
     refreshButtons();
     refreshStats();
     return;
@@ -136,16 +142,18 @@ function format() {
         : JSON.stringify(parsedValue, null, indentValue());
     }
     els.err.hidden = true;
+    inputGutter.clearError();
   } catch (e) {
     const msg = e?.message || String(e);
     const m = msg.match(/position (\d+)/);
     let where = '';
+    let errLine = null;
     if (m) {
       const pos = Number.parseInt(m[1], 10);
       const before = text.slice(0, pos);
-      const line = before.split('\n').length;
+      errLine = before.split('\n').length;
       const col = pos - before.lastIndexOf('\n');
-      where = ` (line ${line}, column ${col})`;
+      where = ` (line ${errLine}, column ${col})`;
     }
     els.err.textContent = `Parse error${where}: ${msg}`;
     els.err.hidden = false;
@@ -153,7 +161,9 @@ function format() {
     els.outputTree.innerHTML = '';
     parsedStats = null;
     parsedValue = null;
+    inputGutter.setError(errLine);
   }
+  outputGutter.refresh();
   refreshButtons();
   refreshStats();
 }

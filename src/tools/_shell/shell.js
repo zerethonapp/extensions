@@ -134,6 +134,59 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
+/* ---------- line-number gutter ----------
+   Wraps a textarea in `.zt-editor` and injects a sibling `.zt-gutter` that
+   renders 1, 2, 3, … one per logical line. Scroll-syncs via translateY so we
+   don't depend on a programmatic-scrollable overflow:hidden quirk.
+
+   Important: the textarea should have wrap="off" so 1 logical line == 1
+   visual line, otherwise wrapped lines would offset the gutter.
+
+   Returns { setError(line), clearError(), refresh() }. */
+
+export function attachGutter(textarea) {
+  const editor = document.createElement('div');
+  editor.className = 'zt-editor';
+  const gutter = document.createElement('div');
+  gutter.className = 'zt-gutter';
+  const inner = document.createElement('div');
+  inner.className = 'zt-gutter-inner';
+  gutter.appendChild(inner);
+
+  const parent = textarea.parentNode;
+  parent.insertBefore(editor, textarea);
+  editor.appendChild(gutter);
+  editor.appendChild(textarea);
+
+  let errorLine = null;
+
+  function refresh() {
+    const lines = (textarea.value || '').split('\n').length;
+    const n = Math.max(lines, 1);
+    let html = '';
+    for (let i = 1; i <= n; i++) {
+      html += (i === errorLine ? `<span class="zt-line-error">${i}</span>` : i) + (i < n ? '\n' : '');
+    }
+    inner.innerHTML = html;
+  }
+
+  textarea.addEventListener('input', refresh);
+  textarea.addEventListener('scroll', () => {
+    inner.style.transform = `translateY(${-textarea.scrollTop}px)`;
+  });
+
+  refresh();
+
+  return {
+    setError(line) {
+      errorLine = Number.isFinite(line) && line > 0 ? line : null;
+      refresh();
+    },
+    clearError() { errorLine = null; refresh(); },
+    refresh,
+  };
+}
+
 /* ---------- pane fullscreen toggle + flash ---------- */
 
 export function toggleFullscreen(paneEl, gridEl) {

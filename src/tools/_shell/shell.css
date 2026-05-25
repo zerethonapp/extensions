@@ -348,6 +348,43 @@ body {
   color: white;
 }
 
+/* Editor wrapper — flex row that holds the line-number gutter + textarea
+   side-by-side. attachGutter() in shell.js wraps a textarea in this. */
+.zt-editor {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.zt-gutter {
+  flex-shrink: 0;
+  width: 3.25em;
+  padding: 10px 8px 10px 4px;
+  margin: 0;
+  background: var(--zt-bg-soft);
+  color: var(--zt-text-soft);
+  font: 13px/1.5 ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, monospace;
+  text-align: right;
+  border-right: 1px solid var(--zt-border);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.zt-gutter-inner {
+  white-space: pre;
+  will-change: transform;            /* scroll-sync via translateY */
+}
+.zt-line-error {
+  display: inline-block;
+  color: var(--zt-error);
+  font-weight: 700;
+  background: rgba(248, 113, 113, 0.18);
+  padding: 0 4px;
+  margin: 0 -4px 0 -4px;
+  border-radius: 2px;
+}
+
 .zt-textarea {
   width: 100%;
   flex: 1;                          /* fills the remaining height inside .zt-pane */
