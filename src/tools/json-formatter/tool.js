@@ -81,8 +81,11 @@ function setMode(next) {
   els.mMinify.classList.toggle('is-on', mode === 'minify');
   els.mTree.classList.toggle('is-on', mode === 'tree');
   // Swap which output surface is visible. Textarea for pretty/minify,
-  // <div> tree for tree mode.
-  els.output.hidden = mode === 'tree';
+  // <div> tree for tree mode. Toggle the WRAPPER (.zt-editor injected by
+  // attachGutter) — not the textarea — otherwise the empty editor wrapper
+  // keeps its flex:1 and pushes the tree pane down to nothing.
+  const outputEditor = els.output.closest('.zt-editor') || els.output;
+  outputEditor.hidden = mode === 'tree';
   els.outputTree.hidden = mode !== 'tree';
   format();
 }
