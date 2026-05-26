@@ -4,8 +4,8 @@
     "description": "Extension name shown in Chrome Web Store and the toolbar."
   },
   "ext_description": {
-    "message": "Launcher for 111+ free dev / creator / web3 utilities at tools.zerethon.com. Search, favorites, context menu, omnibox. Privacy-first.",
-    "description": "Extension store description (max 132 chars rendered as subtitle)."
+    "message": "3 offline tools (JSON, Base64, hash) + launcher for 109 more at tools.zerethon.com. Right-click prefill, omnibox zt.",
+    "description": "Extension store description (max 132 chars; Chrome rejects on overflow)."
   },
   "ext_action_title": {
     "message": "Open Zerethon Tools launcher"

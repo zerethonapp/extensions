@@ -3,7 +3,7 @@
     "message": "Zerethon Tools"
   },
   "ext_description": {
-    "message": "Trình khởi chạy 111+ công cụ miễn phí cho dev / creator / web3 tại tools.zerethon.com. Tìm kiếm, yêu thích, context menu, omnibox. Ưu tiên quyền riêng tư."
+    "message": "3 tool offline (JSON, Base64, hash) + launcher 109 tool khác tại tools.zerethon.com. Right-click prefill, omnibox zt."
   },
   "ext_action_title": {
     "message": "Mở trình khởi chạy Zerethon Tools"

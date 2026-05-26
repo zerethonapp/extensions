@@ -19,6 +19,7 @@ const CHECKS = [
   ['en locale has every __MSG_*__ key used by manifest', checkLocaleCoverage],
   ['locales other than en match the en key set', checkLocaleParity],
   ['every BUNDLED_SLUGS entry has a tool page in src/tools/', checkBundledTools],
+  ['ext_name / ext_description within Chrome length limits in every locale', checkLocaleLengthLimits],
 ];
 
 const fails = [];
@@ -122,6 +123,28 @@ async function checkLocaleParity() {
     const other = JSON.parse(await fs.readFile(path.join(localesDir, e.name, 'messages.json'), 'utf8'));
     const missing = Object.keys(en).filter((k) => !other[k]);
     if (missing.length) throw new Error(`locale ${e.name} missing keys: ${missing.join(', ')}`);
+  }
+}
+
+async function checkLocaleLengthLimits() {
+  // Chrome Web Store rejects on upload if these overflow.
+  // Source: https://developer.chrome.com/docs/extensions/reference/manifest/name
+  const LIMITS = {
+    ext_name: { max: 75, label: 'name' },              // shown in toolbar + store listing
+    ext_description: { max: 132, label: 'description' },// subtitle under the name in store
+  };
+  const localesDir = path.join(SRC, '_locales');
+  const entries = await fs.readdir(localesDir, { withFileTypes: true });
+  for (const e of entries) {
+    if (!e.isDirectory()) continue;
+    const msgs = JSON.parse(await fs.readFile(path.join(localesDir, e.name, 'messages.json'), 'utf8'));
+    for (const [key, { max, label }] of Object.entries(LIMITS)) {
+      const m = msgs[key]?.message;
+      if (typeof m !== 'string') continue;
+      if (m.length > max) {
+        throw new Error(`_locales/${e.name}: ${label} is ${m.length} chars (max ${max}). Chrome will reject on upload.`);
+      }
+    }
   }
 }
 
