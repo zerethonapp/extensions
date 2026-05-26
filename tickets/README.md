@@ -43,7 +43,7 @@ Legend: 🟢 done · 🔵 in progress · 🟡 plan · ⛔ blocked · ➖ deferre
 
 | # | Ticket | Status | Priority | Notes |
 |---|---|---|---|---|
-| P4-01 | [Chrome Web Store submit (Unlisted → Public)](phase-4-submission/01-chrome-web-store-submit.md) | 🟡 plan | P0 | 3-7 day review queue |
+| P4-01 | [Chrome Web Store submit (Unlisted → Public)](phase-4-submission/01-chrome-web-store-submit.md) | 🔵 submitted 2026-05-27 | P0 | Awaiting Chrome review (3-7 days typical for clean MV3) |
 | P4-02 | [Edge Add-ons submit (same zip)](phase-4-submission/02-edge-addons-submit.md) | 🟡 plan | P1 | 1-3 day review |
 | P4-03 | [Monitor first 7 days reviews + crash reports](phase-4-submission/03-monitor-7-days.md) | 🟡 plan | P1 | Catch regressions early |
 

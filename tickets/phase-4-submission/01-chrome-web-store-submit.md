@@ -1,6 +1,6 @@
 # P4-01 — Chrome Web Store submit (Unlisted → Public)
 
-- **Status**: 🟡 plan
+- **Status**: 🔵 submitted, awaiting review (2026-05-27)
 - **Phase**: 4
 - **Priority**: P0
 - **Estimate**: 1 hour to submit + 3-7 day review wait + 3 day smoke-test as Unlisted
@@ -67,3 +67,20 @@ End goal of the whole project. Unlisted-first lets us catch any "works on my mac
 
 ## Updates
 - 2026-05-23: created
+- 2026-05-27: **SUBMITTED to Chrome Web Store** with `zerethon-tools-v0.2.0.zip`.
+  Dashboard confirmation: "Your extension was submitted for review. You may
+  check the status on the developer dashboard home page."
+  - Visibility: **Unlisted** (per Step A.4 of `docs/SUBMIT.md`)
+  - Distribution: All regions, Free
+  - All 11 dashboard publish-blockers cleared: icon, category, description,
+    5 screenshots, 4 permission justifications + remote-code declaration,
+    single purpose declaration, 3 data-handling certifications, Website
+    content disclosure with justification, privacy policy URL.
+  - Resolved late blockers during submission:
+    1. en/vi ext_description trimmed from 133/154 → 116/117 chars (Chrome
+       rejected initial upload with 132 char limit). Added verify-package
+       rule `checkLocaleLengthLimits` to prevent regressions. (commit 588159c)
+  - Expected review queue: 3–7 days for clean MV3 + 3 permissions.
+  - Next: P4-03 monitor reviews + smoke-test on 3 devices once approved.
+  - Edge submission deferred until Chrome approves (P4-02).
+- Status → 🔵 submitted, awaiting review.
