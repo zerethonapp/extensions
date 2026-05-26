@@ -33,6 +33,11 @@
 
 * { box-sizing: border-box; }
 
+/* The [hidden] HTML attribute applies `display: none` only when nothing else
+   sets `display`. Elements with explicit `display: flex` (.zt-editor) would
+   otherwise stay visible — force-hide them via this universal rule. */
+[hidden] { display: none !important; }
+
 html, body {
   margin: 0;
   padding: 0;
