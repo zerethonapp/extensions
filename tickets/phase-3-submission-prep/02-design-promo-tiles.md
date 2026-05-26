@@ -1,6 +1,6 @@
 # P3-02 — Design promo tiles (440×280 + 1400×560)
 
-- **Status**: 🟡 plan
+- **Status**: 🟢 done (2026-05-26)
 - **Phase**: 3
 - **Priority**: P0 (small tile required) + P1 (marquee tile boosts visibility)
 - **Estimate**: 2 hours design + 1 hour iteration
@@ -40,3 +40,10 @@ Two promo tile PNGs for the Chrome Web Store listing:
 
 ## Updates
 - 2026-05-23: created
+- 2026-05-26: shipped. Designed both tiles as HTML in `store-assets/promo-source/`, rendered via headless Chrome at 2× scale, downscaled with `sips` to exact target dims for Retina-crisp output.
+  - **`promo-440x280.png`** (99 KB): dark gradient bg, Z brand mark (24px), "Zerethon Tools" wordmark, OFFLINE pill, headline `112 dev / creator / web3 tools — at your toolbar`, footer chips (`JSON · Base64 · Hash · offline`, `Right-click`, `tools.zerethon.com`).
+  - **`promo-1400x560.png`** (385 KB): two-column layout — left has bigger brand row + headline + 4 feature bullets (offline / right-click / omnibox / zero analytics), right has a mock launcher card (rotated -2°) showing search "json" with 5 results + offline badge on json-formatter.
+  - Both copied to `store-assets/edge/` for Edge submission.
+  - Brand color tokens match popup.css (`#6cb0ff` accent, `#0b1020` bg).
+- Reviewed at 50% zoom — text remains legible in both. Z mark + headline survive thumbnail scale.
+- Status → 🟢 done.

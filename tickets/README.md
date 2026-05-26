@@ -35,9 +35,9 @@ Legend: 🟢 done · 🔵 in progress · 🟡 plan · ⛔ blocked · ➖ deferre
 | # | Ticket | Status | Priority | Notes |
 |---|---|---|---|---|
 | P3-01 | [Capture 5 screenshots 1280×800 from real Chrome](phase-3-submission-prep/01-capture-screenshots.md) | 🟢 done (2026-05-26) | P0 | 5 PNG @ exact 1280×800 in `store-assets/{chrome,edge}/screenshots/`. #5 has minor caveat (perm list cut). |
-| P3-02 | [Design promo tiles (440×280 + 1400×560)](phase-3-submission-prep/02-design-promo-tiles.md) | 🟡 plan | P0 | 440×280 required, 1400×560 boosts visibility |
-| P3-03 | [Final QA smoke test (every surface, both i18n)](phase-3-submission-prep/03-final-qa-smoke-test.md) | 🟡 plan | P0 | All surfaces work on a clean profile |
-| P3-04 | [Self-review listing copy for vagueness / keyword stuffing](phase-3-submission-prep/04-listing-copy-review.md) | 🟡 plan | P1 | One non-author reads docs/LISTING.md |
+| P3-02 | [Design promo tiles (440×280 + 1400×560)](phase-3-submission-prep/02-design-promo-tiles.md) | 🟢 done (2026-05-26) | P0 | Both PNGs in `store-assets/{chrome,edge}/`. Generated via HTML + headless Chrome @ 2x. |
+| P3-03 | [Final QA smoke test (every surface, both i18n)](phase-3-submission-prep/03-final-qa-smoke-test.md) | 🟡 plan (checklist ready) | P0 | Paste-ready 10-section checklist in [`docs/SMOKE-TEST.md`](../docs/SMOKE-TEST.md) — user runs through it |
+| P3-04 | [Self-review listing copy for vagueness / keyword stuffing](phase-3-submission-prep/04-listing-copy-review.md) | 🟢 done (2026-05-26) | P1 | 3 fixes applied to `docs/LISTING.md` (tagline backticks, hash encodings list, byte-identical claim softened) |
 
 ## Phase 4 — Store submission
 

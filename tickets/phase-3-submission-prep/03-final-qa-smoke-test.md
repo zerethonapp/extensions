@@ -1,6 +1,6 @@
 # P3-03 — Final QA smoke test (every surface, both i18n locales)
 
-- **Status**: 🟡 plan
+- **Status**: 🟡 plan — paste-ready 10-section checklist in [`docs/SMOKE-TEST.md`](../../docs/SMOKE-TEST.md). Run through it once on a clean Chrome profile before submitting.
 - **Phase**: 3
 - **Priority**: P0
 - **Estimate**: 2 hours

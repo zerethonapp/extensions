@@ -8,7 +8,7 @@ Paste-ready text for Chrome Web Store and Microsoft Edge Add-ons dashboards.
 > Zerethon Tools — Offline JSON, Base64, Hash + Launcher for 109 More
 
 ## Short summary / tagline (≤ 132 chars)
-> 3 tools run offline (JSON / Base64 / Hash) + a launcher for 109 more. Right-click prefill, omnibox `zt`, no analytics, MIT-licensed.
+> 3 tools run offline (JSON / Base64 / Hash) + a launcher for 109 more. Right-click prefill, omnibox keyword zt, no analytics.
 
 ## Category
 - Chrome: Developer Tools
@@ -31,7 +31,7 @@ THREE TOOLS RUN OFFLINE (no internet required)
 • Base64 Encoder & Decoder — UTF-8 safe, URL-safe variant, swap input↔output
   in one click.
 • Hash Generator — SHA-1 / SHA-256 / SHA-384 / SHA-512 via the browser's
-  Web Crypto API. Hex or Base64 output.
+  Web Crypto API. Hex (lower/upper), Base64, or Base64 URL-safe output.
 
 Open these from the launcher or right-click selected text on any page —
 the text is prefilled, ready to format/encode/hash. No network call, no
@@ -53,7 +53,8 @@ BROWSER-NATIVE SHORTCUTS
   rest, the matching tool opens on tools.zerethon.com.
 • Type "zt" in the address bar → autocomplete any of 112 tools.
 • Pin the launcher to Chrome's side panel — keep it visible while browsing.
-• Ctrl+Shift+Z (Cmd+Shift+Z on Mac) opens the launcher.
+• Ctrl+Shift+Z (Cmd+Shift+Z on Mac) opens the launcher. Customise the
+  shortcut in chrome://extensions/shortcuts.
 
 PRIVACY (READ THIS — IT IS THE WHOLE POINT)
 • Zero analytics, zero telemetry, zero third-party SDKs.
@@ -63,8 +64,9 @@ PRIVACY (READ THIS — IT IS THE WHOLE POINT)
 • Selected text is never logged on our server. Either it stays inside the
   extension (offline tools) or it travels in a URL query parameter that
   the destination tool decodes client-side.
-• Full source MIT-licensed on GitHub. Reproducible builds — `npm run build`
-  produces the byte-identical zip we submit.
+• Full source MIT-licensed on GitHub. The submitted package is built
+  reproducibly from source with `npm run build` — you can audit every
+  line and rebuild the same zip locally.
 
 NO ADS. NO PAYWALL. NO SUBSCRIPTION. NO SIGNUP.
 

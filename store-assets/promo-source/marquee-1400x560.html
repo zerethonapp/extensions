@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+  html, body { margin: 0; padding: 0; width: 1400px; height: 560px; overflow: hidden; }
+  body {
+    background: linear-gradient(135deg, #0b1020 0%, #11172e 50%, #1d2545 100%);
+    color: #e6e9f2;
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 56px 72px;
+    box-sizing: border-box;
+    gap: 56px;
+    position: relative;
+  }
+  body::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(900px circle at 100% 50%, rgba(108, 176, 255, 0.15), transparent 60%);
+    pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: absolute;
+    width: 320px; height: 320px;
+    bottom: -160px; right: -100px;
+    background: radial-gradient(circle, rgba(52, 211, 153, 0.18), transparent 60%);
+    pointer-events: none;
+  }
+
+  /* LEFT column — brand + headline + features */
+  .left { display: flex; flex-direction: column; gap: 28px; position: relative; }
+
+  .brand-row { display: flex; align-items: center; gap: 14px; }
+  .z-mark {
+    display: grid; place-items: center;
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: #6cb0ff;
+    color: #0b1020;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 1;
+  }
+  .brand { font-size: 24px; font-weight: 600; letter-spacing: -0.01em; }
+  .badge {
+    margin-left: 8px;
+    font-size: 10px; font-weight: 700;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: rgba(108, 176, 255, 0.18);
+    color: #6cb0ff;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+  h1 .accent { color: #6cb0ff; }
+  h1 .smaller { font-size: 32px; font-weight: 500; color: #8a93b0; letter-spacing: -0.02em; }
+
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 22px;
+    font-size: 15px;
+    color: #b8bfd6;
+  }
+  .features div { display: flex; align-items: flex-start; gap: 10px; }
+  .features svg { flex-shrink: 0; margin-top: 3px; color: #34d399; }
+  .features strong { color: #e6e9f2; font-weight: 600; }
+
+  .footer { font-size: 13px; color: #8a93b0; }
+  .footer .domain { color: #6cb0ff; font-weight: 500; }
+
+  /* RIGHT column — mock launcher card */
+  .right { display: flex; align-items: center; justify-content: center; position: relative; }
+  .mock {
+    width: 420px;
+    background: #11172e;
+    border: 1px solid #1d2545;
+    border-radius: 16px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(108, 176, 255, 0.05);
+    overflow: hidden;
+    transform: rotate(-2deg);
+  }
+  .mock-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 11px 14px;
+    background: #0f1530;
+    border-bottom: 1px solid #1d2545;
+    font-size: 12px;
+  }
+  .mock-search {
+    flex: 1;
+    background: #0b1020;
+    border: 1px solid #1d2545;
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: #6cb0ff;
+    font-family: ui-monospace, monospace;
+    font-size: 12px;
+  }
+  .mock-count { color: #8a93b0; font-size: 10px; }
+  .mock-body { padding: 8px 0; }
+  .mock-section-title {
+    padding: 8px 14px 4px;
+    font-size: 10px; font-weight: 600;
+    color: #8a93b0;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .mock-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+  .mock-row:hover { background: #182146; }
+  .mock-row .name { flex: 1; color: #e6e9f2; }
+  .mock-row .star { color: #f5c451; font-size: 14px; }
+  .mock-row .star.off { color: #5b6478; }
+  .mock-row .badge-off {
+    font-size: 9px; font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: rgba(108, 176, 255, 0.18);
+    color: #6cb0ff;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .mock-row .badge-web {
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 999px;
+    border: 1px solid #1d2545;
+    color: #8a93b0;
+  }
+</style>
+</head>
+<body>
+  <!-- LEFT -->
+  <div class="left">
+    <div class="brand-row">
+      <div class="z-mark">Z</div>
+      <div class="brand">Zerethon Tools</div>
+      <div class="badge">Offline · Open Source</div>
+    </div>
+
+    <h1>
+      <span class="accent">112</span> dev / creator / web3 tools<br />
+      <span class="smaller">one click from your toolbar.</span>
+    </h1>
+
+    <div class="features">
+      <div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+        <div><strong>3 tools run offline</strong> — JSON, Base64, SHA-256</div>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+        <div><strong>Right-click prefill</strong> — selected text → tool</div>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+        <div><strong>Omnibox keyword</strong> — type <code style="background:#0f1530; padding:1px 6px; border-radius:4px; font-size:12px; color:#6cb0ff;">zt</code> + tool</div>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+        <div><strong>Zero analytics</strong> — no telemetry, MIT-licensed</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span class="domain">tools.zerethon.com</span> · 3 permissions · 1 host · No ads
+    </div>
+  </div>
+
+  <!-- RIGHT: mock launcher -->
+  <div class="right">
+    <div class="mock">
+      <div class="mock-header">
+        <div class="mock-search">json|</div>
+        <div class="mock-count">5 / 112</div>
+      </div>
+      <div class="mock-body">
+        <div class="mock-section-title">Results</div>
+        <div class="mock-row">
+          <span class="name">JSON Formatter</span>
+          <span class="badge-off">Offline</span>
+          <span class="star">★</span>
+        </div>
+        <div class="mock-row">
+          <span class="name">JSON Diff</span>
+          <span class="badge-web">↗ web</span>
+          <span class="star off">☆</span>
+        </div>
+        <div class="mock-row">
+          <span class="name">JSON to CSV</span>
+          <span class="badge-web">↗ web</span>
+          <span class="star off">☆</span>
+        </div>
+        <div class="mock-row">
+          <span class="name">JSON to YAML</span>
+          <span class="badge-web">↗ web</span>
+          <span class="star off">☆</span>
+        </div>
+        <div class="mock-row">
+          <span class="name">JSON to XML</span>
+          <span class="badge-web">↗ web</span>
+          <span class="star off">☆</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

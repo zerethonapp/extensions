@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+  /* exact 440×280 canvas — viewport is the tile */
+  html, body { margin: 0; padding: 0; width: 440px; height: 280px; overflow: hidden; }
+  body {
+    background: linear-gradient(135deg, #0b1020 0%, #1d2545 100%);
+    color: #e6e9f2;
+    font: 13px/1.4 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 22px 24px;
+    box-sizing: border-box;
+    position: relative;
+  }
+  /* subtle radial highlight */
+  body::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(600px circle at 100% 0%, rgba(108, 176, 255, 0.18), transparent 60%);
+    pointer-events: none;
+  }
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+  }
+  .z-mark {
+    display: grid; place-items: center;
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    background: #6cb0ff;
+    color: #0b1020;
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 1;
+  }
+  .brand {
+    font-size: 16px; font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .pill {
+    margin-left: auto;
+    font-size: 9px; font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(108, 176, 255, 0.18);
+    color: #6cb0ff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .headline {
+    position: relative;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .headline .accent { color: #6cb0ff; }
+  .footer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: #8a93b0;
+  }
+  .footer .dot { width: 3px; height: 3px; border-radius: 50%; background: #34d399; box-shadow: 0 0 6px #34d399; }
+  .footer .feature {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 9px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    font-size: 10px; font-weight: 500;
+    color: #e6e9f2;
+  }
+  .domain { margin-left: auto; color: #6cb0ff; font-weight: 500; font-size: 10px; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="z-mark">Z</div>
+    <div class="brand">Zerethon Tools</div>
+    <div class="pill">Offline</div>
+  </div>
+
+  <div class="headline">
+    <span class="accent">112</span> dev / creator / web3 tools<br />
+    <span style="font-weight:500; color:#8a93b0;">at your toolbar.</span>
+  </div>
+
+  <div class="footer">
+    <span class="feature">JSON · Base64 · Hash · offline</span>
+    <span class="feature">Right-click</span>
+    <span class="domain">tools.zerethon.com</span>
+  </div>
+</body>
+</html>
