@@ -1,6 +1,6 @@
 # P3-01 — Capture 5 screenshots (1280×800) from real Chrome
 
-- **Status**: 🟡 plan
+- **Status**: 🟢 done (2026-05-26 — 5 screenshots delivered, 1 optional re-shoot noted)
 - **Phase**: 3 (submission prep)
 - **Priority**: P0
 - **Estimate**: 2-3 hours
@@ -44,3 +44,11 @@ Each screenshot:
 
 ## Updates
 - 2026-05-23: created
+- 2026-05-26: shipped. 5 source screenshots captured at ~2880×~1590 (Retina) saved in `tickets/Screenshot/screenshots/`. Processed via `sips --resampleHeight 800` + `sips -c 800 1280` → exact 1280×800 PNG, center-cropped. Output in `store-assets/chrome/screenshots/` + copied to `store-assets/edge/screenshots/` (1.3 MB each dir).
+  - **#1 popup-launcher**: popup visible right-side with "json" filter + json-formatter offline badge ✓
+  - **#2 offline-json-tool**: STAR SHOT — Z brand mark + OFFLINE pill + per-pane toolbars + line gutters + Pretty output + stats strip all visible ✓
+  - **#3 context-menu**: all 5 "Zerethon: …" entries visible in Wikipedia JSON page right-click ✓
+  - **#4 omnibox-suggestions**: 8 suggestions visible with categories + offline indicator on JSON Formatter ✓
+  - **#5 extensions-card**: Version 0.2.0 + description + Size < 1MB ✓. Caveat: permission list bị cắt ở bottom — chỉ "Site access" header visible, không thấy storage/contextMenus/sidePanel + host. Optional re-shoot scroll xuống thêm. Không blocker (Chrome shows perms at install time anyway).
+- Tabs "Phân tích - Claude" + "Ask Gemini" visible in shots #1, #3, #4 — minor distraction but not blocker. Re-shoot in incognito profile if perfectionist.
+- Status → 🟢 done.
