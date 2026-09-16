@@ -10,7 +10,7 @@ Manifest V3. Chrome + Edge. Vanilla JS, no runtime dependencies.
 - **Privacy policy** — https://tools.zerethon.com/extension/privacy
 - **Tools catalog (BE)** — https://tools.zerethon.com (111+ free utilities)
 - **Source code** — https://github.com/zerethonapp/extensions
-- **Chrome Web Store** — _TBD (P4-01 submission pending)_
+- **Chrome Web Store** — https://chromewebstore.google.com/detail/zerethon-tools/mdbcbnalkhjogllppjkenlecankpeomk
 - **Microsoft Edge Add-ons** — _TBD (P4-02 submission pending)_
 - **Support** — support@zerethon.com
 
