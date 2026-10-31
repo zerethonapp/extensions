@@ -4,7 +4,7 @@
     "description": "Extension name shown in Chrome Web Store and the toolbar."
   },
   "ext_description": {
-    "message": "3 offline tools (JSON, Base64, hash) + launcher for 109 more at tools.zerethon.com. Right-click prefill, omnibox zt.",
+    "message": "Right-click a selection to open the right tool: QR code, JSON, Base64, hash, IDE. 3 offline tools + launcher for tools.zerethon.com.",
     "description": "Extension store description (max 132 chars; Chrome rejects on overflow)."
   },
   "ext_action_title": {
@@ -49,23 +49,40 @@
   "aria_unfavorite": {
     "message": "Remove from favorites"
   },
+  "ctx_root": {
+    "message": "Zerethon Tools",
+    "description": "Parent context-menu entry; the submenu holds every action."
+  },
+  "ctx_smart": {
+    "message": "Open “%s” in the best tool",
+    "description": "Suggested action, first in the submenu. %s is replaced by Chrome with the selected text."
+  },
+  "ctx_create_qr": {
+    "message": "Create QR Code"
+  },
+  "ctx_open_ide": {
+    "message": "Open in IDE"
+  },
   "ctx_format_json": {
-    "message": "Zerethon: Format as JSON"
+    "message": "Format JSON"
   },
   "ctx_b64_decode": {
-    "message": "Zerethon: Decode Base64"
+    "message": "Decode Base64"
   },
   "ctx_b64_encode": {
-    "message": "Zerethon: Encode Base64"
+    "message": "Encode Base64"
   },
   "ctx_hash_sha256": {
-    "message": "Zerethon: Hash (SHA-256)"
+    "message": "Generate Hash (SHA-256)"
   },
   "ctx_case_convert": {
-    "message": "Zerethon: Convert case…"
+    "message": "Convert case…"
   },
   "ctx_parse_url": {
-    "message": "Zerethon: Parse URL"
+    "message": "Parse URL"
+  },
+  "ctx_all_tools": {
+    "message": "All Tools"
   },
   "omnibox_default": {
     "message": "Search Zerethon Tools — type a tool name, press Enter to open"

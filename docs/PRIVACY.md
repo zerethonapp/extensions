@@ -1,6 +1,6 @@
 # Privacy Policy — Zerethon Tools Browser Extension
 
-_Last updated: 2026-05-23 · Version: 0.1.0 · Publisher: Zerethon_
+_Last updated: 2026-10-31 · Version: 0.3.0 · Publisher: Zerethon_
 
 This policy covers the **Zerethon Tools** browser extension (Chrome Web Store
 and Microsoft Edge Add-ons). It is published in source form here and mirrored
@@ -33,12 +33,16 @@ extension.
   how many visits originated from the extension in aggregate.
 
 ## What the extension does with selected text
-The right-click "Zerethon: …" context-menu entries take the text you have
-selected on a webpage and pass it to the corresponding tool by URL-safe
-base64-encoding it into an `?input=…` query parameter on the destination URL.
-The tool page on tools.zerethon.com decodes that parameter entirely in your
-browser using its existing client-side JavaScript — the value is never logged
-on our server. Maximum size is 100 KB; longer selections are dropped.
+The right-click "Zerethon Tools" menu takes the text you have selected on a
+webpage and opens it in a Zerethon tool on tools.zerethon.com or in Zerethon
+IDE (ide.zerethon.com). Which tool is suggested is decided by simple rules that
+run inside the extension on your device — no AI service and no network request
+is involved. The text is URL-safe base64-encoded into the URL fragment
+(`#input=…` or `#code=…`), the part of a URL that browsers never send to a
+server; the destination page decodes it in your browser and removes it from the
+address bar. The extension does not store or log selected text. Maximum size is
+100 KB; for longer selections the tool opens empty and tells you to paste the
+text instead.
 
 ## What the extension does NOT do
 - Read or modify any webpage. There are no content scripts.
@@ -53,7 +57,7 @@ on our server. Maximum size is 100 KB; longer selections are dropped.
 | Permission | Why |
 |---|---|
 | `storage` | Persist recents (local) and favorites (sync). |
-| `contextMenus` | Add the six "Zerethon: …" right-click entries. |
+| `contextMenus` | Add the "Zerethon Tools" right-click menu for selected text. |
 | `sidePanel` | Let the launcher open in Chrome's side panel. |
 | `host_permissions: https://tools.zerethon.com/*` | Fetch the tool catalog; open tools in a new tab. |
 

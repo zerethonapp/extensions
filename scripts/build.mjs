@@ -30,11 +30,13 @@ if (!['prod', 'local'].includes(ENV)) {
 const ENVS = {
   prod: {
     baseUrl: 'https://tools.zerethon.com',
+    ideUrl: 'https://ide.zerethon.com',
     nameSuffix: '',
     isDev: false,
   },
   local: {
     baseUrl: 'https://tools.zerethon.local:7890',
+    ideUrl: 'https://ide.zerethon.local:8890',
     nameSuffix: ' (DEV)',
     isDev: true,
   },
@@ -51,6 +53,8 @@ const INCLUDE = [
   'sidepanel/sidepanel.js',
   'sidepanel/sidepanel.css',
   'lib/config.js',
+  'lib/classifier.js',
+  'lib/router.js',
   'lib/tools-registry.js',
   'lib/recents.js',
   'lib/favorites.js',
@@ -111,6 +115,7 @@ async function rewriteConfig() {
 export const BASE_URL = ${JSON.stringify(CFG.baseUrl)};
 export const API_URL = \`\${BASE_URL}/api/internal/tools.json\`;
 export const IS_DEV = ${CFG.isDev};
+export const IDE_URL = ${JSON.stringify(CFG.ideUrl)};
 `;
   await fs.writeFile(p, next, 'utf8');
 }

@@ -3,7 +3,7 @@
     "message": "Zerethon Tools"
   },
   "ext_description": {
-    "message": "3 tool offline (JSON, Base64, hash) + launcher 109 tool khác tại tools.zerethon.com. Right-click prefill, omnibox zt."
+    "message": "Chuột phải vào đoạn chọn để mở đúng công cụ: mã QR, JSON, Base64, hash, IDE. 3 tool offline + launcher cho tools.zerethon.com."
   },
   "ext_action_title": {
     "message": "Mở trình khởi chạy Zerethon Tools"
@@ -47,23 +47,38 @@
   "aria_unfavorite": {
     "message": "Bỏ khỏi yêu thích"
   },
+  "ctx_root": {
+    "message": "Zerethon Tools"
+  },
+  "ctx_smart": {
+    "message": "Mở “%s” bằng công cụ phù hợp nhất"
+  },
+  "ctx_create_qr": {
+    "message": "Tạo mã QR"
+  },
+  "ctx_open_ide": {
+    "message": "Mở trong IDE"
+  },
   "ctx_format_json": {
-    "message": "Zerethon: Định dạng JSON"
+    "message": "Định dạng JSON"
   },
   "ctx_b64_decode": {
-    "message": "Zerethon: Giải mã Base64"
+    "message": "Giải mã Base64"
   },
   "ctx_b64_encode": {
-    "message": "Zerethon: Mã hóa Base64"
+    "message": "Mã hóa Base64"
   },
   "ctx_hash_sha256": {
-    "message": "Zerethon: Hash (SHA-256)"
+    "message": "Tạo hash (SHA-256)"
   },
   "ctx_case_convert": {
-    "message": "Zerethon: Đổi kiểu chữ…"
+    "message": "Đổi kiểu chữ…"
   },
   "ctx_parse_url": {
-    "message": "Zerethon: Phân tích URL"
+    "message": "Phân tích URL"
+  },
+  "ctx_all_tools": {
+    "message": "Tất cả công cụ"
   },
   "omnibox_default": {
     "message": "Tìm Zerethon Tools — gõ tên công cụ, nhấn Enter để mở"

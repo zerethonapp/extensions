@@ -1,9 +1,10 @@
 // Static snapshot of the live tool catalog at tools.zerethon.com.
 // Regenerate with: npm run sync  (fetches /api/internal/tools.json and rewrites this file)
-// Last sync: 2026-05-23
+// Last sync: 2026-05-23 (+ qr-code-generator added by hand 2026-10-31 for the v0.3 context menu)
 
 export const REGISTRY = [
   { slug: "color-converter", name: "Color Converter", category: "creator", bundled: true, keywords: ["hex to rgb","rgb to hex","hex to hsl","color converter"] },
+  { slug: "qr-code-generator", name: "QR Code Generator", category: "creator", bundled: false, keywords: ["qr code generator","create qr code","wifi qr code generator","qr code maker"] },
   { slug: "lorem-ipsum-generator", name: "Lorem Ipsum Generator", category: "creator", bundled: true, keywords: ["lorem ipsum generator","placeholder text","dummy text","lipsum"] },
   { slug: "base64-encoder", name: "Base64 Encoder & Decoder", category: "developer", bundled: true, keywords: ["base64 encoder","base64 decoder","base64 online","url-safe base64"] },
   { slug: "html-entities-converter", name: "HTML Entities Converter", category: "developer", bundled: true, keywords: ["html entity encoder","html entities decoder","convert special characters html","amp encode"] },

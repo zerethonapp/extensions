@@ -2,61 +2,41 @@
 // MV3 service workers are stateless; never hold state outside chrome.storage.
 //
 // Option A (Companion Launcher): every tool opens on tools.zerethon.com.
-// Context-menu invocations base64-encode the selected text into ?input= so the
-// receiving tool page can prefill its input box. Selected text never touches
-// our servers — the query string is decoded entirely client-side by the
-// existing tool view.
+// Context menu (v0.3): a "Zerethon Tools" submenu whose first entry opens the
+// selection in the best-matching tool, decided at click time by the local
+// rule-based classifier (lib/classifier.js → lib/router.js), followed by every
+// manual choice. The selected text is passed in the URL fragment, which never
+// reaches a server; it is not logged or stored.
+//
+// Chrome cannot relabel a menu entry per selection without a content script on
+// every site, so the suggested entry's title is fixed ("Open “%s” in the best
+// tool") and the routing happens on click.
 
 import { REGISTRY, BUNDLED_SLUGS, findTool } from './lib/tools-registry.js';
 import { BASE_URL } from './lib/config.js';
+import { DESTINATIONS, SMART_MENU_ID, buildToolUrl, resolveMenuClick } from './lib/router.js';
 
-const CONTEXT_MENU_ITEMS = [
-  { id: 'zt-json',   tool: 'json-formatter',      titleKey: 'ctx_format_json' },
-  { id: 'zt-b64dec', tool: 'base64-encoder',      titleKey: 'ctx_b64_decode', extra: { mode: 'decode' } },
-  { id: 'zt-b64enc', tool: 'base64-encoder',      titleKey: 'ctx_b64_encode', extra: { mode: 'encode' } },
-  { id: 'zt-hash',   tool: 'hash-generator',      titleKey: 'ctx_hash_sha256' },
-  { id: 'zt-case',   tool: 'text-case-converter', titleKey: 'ctx_case_convert' },
-  { id: 'zt-url',    tool: 'url-parser',          titleKey: 'ctx_parse_url' },
-];
-
-const MAX_PREFILL_BYTES = 100 * 1024;
+const ROOT_MENU_ID = 'zt-root';
 
 chrome.runtime.onInstalled.addListener(() => {
+  // Recreated on install and on every update, so 0.2.0's top-level entries are replaced.
   chrome.contextMenus.removeAll(() => {
-    for (const item of CONTEXT_MENU_ITEMS) {
-      chrome.contextMenus.create({
-        id: item.id,
-        title: chrome.i18n.getMessage(item.titleKey),
-        contexts: ['selection'],
-      });
+    const add = (props) => chrome.contextMenus.create({ contexts: ['selection'], ...props });
+    add({ id: ROOT_MENU_ID, title: chrome.i18n.getMessage('ctx_root') });
+    add({ id: SMART_MENU_ID, parentId: ROOT_MENU_ID, title: chrome.i18n.getMessage('ctx_smart') });
+    add({ id: 'zt-sep-1', parentId: ROOT_MENU_ID, type: 'separator' });
+    for (const dest of DESTINATIONS.filter((d) => d.menu)) {
+      if (dest.kind === 'home') add({ id: 'zt-sep-2', parentId: ROOT_MENU_ID, type: 'separator' });
+      add({ id: dest.id, parentId: ROOT_MENU_ID, title: chrome.i18n.getMessage(dest.titleKey) });
     }
   });
 });
 
-chrome.contextMenus.onClicked.addListener(async (info) => {
-  const item = CONTEXT_MENU_ITEMS.find((m) => m.id === info.menuItemId);
-  if (!item || !info.selectionText) return;
-  chrome.tabs.create({ url: buildToolUrl(item.tool, info.selectionText, item.extra, 'ctx') });
+chrome.contextMenus.onClicked.addListener((info) => {
+  if (!info.selectionText) return;
+  const target = resolveMenuClick(info.menuItemId, info.selectionText);
+  if (target) chrome.tabs.create({ url: target.url });
 });
-
-export function buildToolUrl(slug, selectionText, extra = {}, src = 'ext') {
-  const url = new URL(`${BASE_URL}/${slug}`);
-  url.searchParams.set('ref', 'ext');
-  url.searchParams.set('src', src);
-  if (extra && typeof extra === 'object') {
-    for (const [k, v] of Object.entries(extra)) url.searchParams.set(k, String(v));
-  }
-  if (selectionText) {
-    const bytes = new TextEncoder().encode(selectionText);
-    if (bytes.byteLength <= MAX_PREFILL_BYTES) {
-      let bin = '';
-      for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
-      const b64 = btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-      url.searchParams.set('input', b64);
-    }
-  }
-  return url.toString();
-}
 
 chrome.omnibox.setDefaultSuggestion({ description: chrome.i18n.getMessage('omnibox_default') });
 

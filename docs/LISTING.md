@@ -8,7 +8,7 @@ Paste-ready text for Chrome Web Store and Microsoft Edge Add-ons dashboards.
 > Zerethon Tools — Offline JSON, Base64, Hash + Launcher for 109 More
 
 ## Short summary / tagline (≤ 132 chars)
-> 3 tools run offline (JSON / Base64 / Hash) + a launcher for 109 more. Right-click prefill, omnibox keyword zt, no analytics.
+> Right-click any selection → the right tool: QR code, JSON, Base64, hash, IDE. 3 offline tools + launcher. No AI, no analytics.
 
 ## Category
 - Chrome: Developer Tools
@@ -33,9 +33,8 @@ THREE TOOLS RUN OFFLINE (no internet required)
 • Hash Generator — SHA-1 / SHA-256 / SHA-384 / SHA-512 via the browser's
   Web Crypto API. Hex (lower/upper), Base64, or Base64 URL-safe output.
 
-Open these from the launcher or right-click selected text on any page —
-the text is prefilled, ready to format/encode/hash. No network call, no
-log on our server. Airplane-mode safe.
+Open these from the launcher — no network call, no log on our server.
+Airplane-mode safe.
 
 109 MORE TOOLS — ONE CLICK AWAY
 Open as new tabs on tools.zerethon.com. The launcher searches all 112 by
@@ -47,10 +46,16 @@ Case Converter · Image Compressor · ETH Unit Converter · Wallet Address
 Validator · MD5 Hash Generator · …
 
 BROWSER-NATIVE SHORTCUTS
-• Right-click selected text → "Zerethon: Format as JSON / Decode Base64 /
-  Encode Base64 / Hash (SHA-256) / Convert case / Parse URL". For the three
-  offline tools the text is prefilled in the extension's own page. For the
-  rest, the matching tool opens on tools.zerethon.com.
+• Right-click selected text → "Zerethon Tools". The first entry opens the
+  selection in the best-matching tool, picked by simple rules that run
+  locally (no AI, no network): a link, email or phone number → QR Code
+  Generator in the right mode; JSON → JSON Formatter; Base64 → decoder;
+  source code → Zerethon IDE with the detected language (PHP, JavaScript,
+  TypeScript, Python, Java, C, C++, Go, Rust, SQL, Bash); other text → QR
+  code. Every tool is also listed by hand: Create QR Code, Open in IDE,
+  Format JSON, Encode/Decode Base64, Generate Hash, Convert case, Parse
+  URL, All Tools. The text is prefilled on tools.zerethon.com or
+  ide.zerethon.com.
 • Type "zt" in the address bar → autocomplete any of 112 tools.
 • Pin the launcher to Chrome's side panel — keep it visible while browsing.
 • Ctrl+Shift+Z (Cmd+Shift+Z on Mac) opens the launcher. Customise the
@@ -61,9 +66,9 @@ PRIVACY (READ THIS — IT IS THE WHOLE POINT)
 • Three permissions only — storage, contextMenus, sidePanel — plus a single
   host: tools.zerethon.com. No <all_urls>, no content scripts.
 • Favorites and recents are stored on your device only.
-• Selected text is never logged on our server. Either it stays inside the
-  extension (offline tools) or it travels in a URL query parameter that
-  the destination tool decodes client-side.
+• Selected text is never sent to our server: it travels in the URL
+  fragment (#…), which browsers do not send to servers, and the
+  destination page decodes it in your browser.
 • Full source MIT-licensed on GitHub. The submitted package is built
   reproducibly from source with `npm run build` — you can audit every
   line and rebuild the same zip locally.
@@ -99,9 +104,10 @@ Questions, requests, bug reports: support@zerethon.com
 - **Web history**: None
 - **User activity**: None
 - **Website content**: YES — only when the user explicitly invokes a
-  context-menu entry on selected text. The text is encoded into the
-  destination URL and decoded client-side; it is never stored or transmitted
-  to a Zerethon server.
+  context-menu entry on selected text. The text is classified locally,
+  encoded into the URL fragment of the destination (tools.zerethon.com or
+  ide.zerethon.com) and decoded client-side; it is never stored or
+  transmitted to a Zerethon server.
 
 ## Privacy policy URL
 > https://tools.zerethon.com/extension/privacy
@@ -120,7 +126,7 @@ Questions, requests, bug reports: support@zerethon.com
 |---|---|---|
 | 1 | Popup open over any tab, search "json" filtered to ~4 results — json-formatter row shows the blue "offline" badge | First-impression visual + proves bundled-vs-link distinction |
 | 2 | The bundled **JSON Formatter** tool open in a new tab with a 50-line payload formatted; Chrome DevTools Network panel visible in background showing "Offline" toggle ON | Proves offline claim demonstrably |
-| 3 | Right-click context menu open over a selected base64 string, all 6 "Zerethon: …" entries visible | Proves browser-native value |
+| 3 | Right-click a selected URL → "Zerethon Tools" submenu open: "Open “…” in the best tool" first, then the manual entries and All Tools (re-capture for 0.3.0) | Proves browser-native value |
 | 4 | Address bar showing "zt json" with omnibox suggestions dropdown (json-formatter + json-diff + …) | Proves keyboard-first UX |
 | 5 | chrome://extensions showing Zerethon Tools with 0 warnings, permission list (storage, contextMenus, sidePanel) + single host tools.zerethon.com visible | Reviewer-friendly: shows minimum permissions |
 

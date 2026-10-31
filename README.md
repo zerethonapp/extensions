@@ -29,10 +29,14 @@ Manifest V3. Chrome + Edge. Vanilla JS, no runtime dependencies.
 - Popup launcher (`Ctrl+Shift+Z` / `Cmd+Shift+Z`) — search 111 tools, pin
   favorites, see recents.
 - Side panel — same launcher, docked to the right of your tabs.
-- Context menu on selected text — six "Zerethon: …" entries (Format as
-  JSON, Decode/Encode Base64, SHA-256 Hash, Convert case…, Parse URL).
-  The selected text is URL-safe-base64-encoded into `?input=…` on the
-  destination tool URL.
+- Context menu on selected text — a "Zerethon Tools" submenu. The first
+  entry opens the selection in the best tool, picked by the local rule-based
+  classifier (`src/lib/classifier.js` → `src/lib/router.js`: URL/email/phone →
+  QR Code Generator, JSON → JSON Formatter, Base64 → decoder, code → Zerethon
+  IDE with the detected language, text → QR). Manual entries follow: Create QR
+  Code, Open in IDE, Format JSON, Encode/Decode Base64, Hash, Convert case,
+  Parse URL, All Tools. The selected text is URL-safe-base64-encoded into the
+  URL fragment (`#input=…`, `#code=…` for the IDE), never the query string.
 - Omnibox keyword `zt` — type `zt json` in the address bar, press Enter,
   the matching tool opens.
 
@@ -68,6 +72,7 @@ npm run build:prod       # → dist/  + zerethon-tools-vX.Y.Z.zip       (prod: h
 npm run build:local      # → dist/  + zerethon-tools-vX.Y.Z-dev.zip   (dev:  https://tools.zerethon.local:7890)
 npm run build            # alias for build:prod
 npm run verify           # 8-point pre-submission lint (run before any submit)
+npm test                 # classifier + router unit tests (node --test, no deps)
 npm run sync             # refresh src/lib/tools-registry.js from live BE (always prod)
 npm run clean            # rm -rf dist *.zip
 ```
