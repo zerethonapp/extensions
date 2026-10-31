@@ -1,6 +1,6 @@
 # Privacy Policy — Zerethon Tools Browser Extension
 
-_Last updated: 2026-10-31 · Version: 0.3.0 · Publisher: Zerethon_
+_Last updated: 2026-10-31 · Version: 0.3.1 · Publisher: Zerethon_
 
 This policy covers the **Zerethon Tools** browser extension (Chrome Web Store
 and Microsoft Edge Add-ons). It is published in source form here and mirrored
@@ -45,7 +45,9 @@ address bar. The extension does not store or log selected text. Maximum size is
 text instead.
 
 ## What the extension does NOT do
-- Read or modify any webpage. There are no content scripts.
+- Read or modify webpages. There are no content scripts; the only page access
+  is reading the text you selected, once, when you click a Zerethon Tools
+  menu entry (`activeTab` + `scripting`).
 - Inject ads, affiliate links, or referral parameters into pages you visit.
 - Run analytics. There is no Google Analytics, Mixpanel, Segment, Sentry, or
   any other telemetry SDK in the package.
@@ -58,6 +60,8 @@ text instead.
 |---|---|
 | `storage` | Persist recents (local) and favorites (sync). |
 | `contextMenus` | Add the "Zerethon Tools" right-click menu for selected text. |
+| `activeTab` | Granted only on a Zerethon Tools menu click, for that tab: read the selected text. |
+| `scripting` | Read the selection with line breaks and indentation intact, on that click only. |
 | `sidePanel` | Let the launcher open in Chrome's side panel. |
 | `host_permissions: https://tools.zerethon.com/*` | Fetch the tool catalog; open tools in a new tab. |
 

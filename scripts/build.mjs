@@ -55,6 +55,7 @@ const INCLUDE = [
   'lib/config.js',
   'lib/classifier.js',
   'lib/router.js',
+  'lib/selection.js',
   'lib/tools-registry.js',
   'lib/recents.js',
   'lib/favorites.js',

@@ -23,6 +23,21 @@ Zerethon IDE at ide.zerethon.com) in a new tab, with the selected text in the
 URL fragment so the page's client-side JavaScript can prefill its input. URL
 fragments are never sent to servers; the text is not stored or logged.
 
+## `activeTab`
+Granted by Chrome only when the user clicks one of the extension's
+right-click menu entries, and only for that tab. Used together with
+`scripting` to read the text the user has just selected, so code keeps its
+line breaks and indentation (the `selectionText` Chrome passes to the
+context-menu handler collapses all whitespace, which breaks code). No
+access to any tab the user has not invoked the menu on.
+
+## `scripting`
+On a context-menu click, runs one small function in the clicked frame of the
+current tab (`chrome.scripting.executeScript`, under the `activeTab` grant)
+that returns `window.getSelection()` — or the selected part of a focused
+textarea/input. It does not modify the page, does not persist, and is not
+injected anywhere else. There are no content scripts.
+
 ## `sidePanel`
 Lets the user open the tool launcher in Chrome's side panel so they can keep
 the search list visible while browsing other tabs. The side panel only shows

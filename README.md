@@ -41,7 +41,9 @@ Manifest V3. Chrome + Edge. Vanilla JS, no runtime dependencies.
   the matching tool opens.
 
 ## What it does NOT do
-- No content scripts.
+- No content scripts. On a context-menu click only, `activeTab` + `scripting`
+  read the selection from that tab (`src/lib/selection.js`) — Chrome's
+  `selectionText` collapses line breaks, which breaks code.
 - No analytics, no telemetry, no third-party SDKs.
 - No `<all_urls>` host permission. The only host is `tools.zerethon.com`.
 

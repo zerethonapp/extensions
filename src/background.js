@@ -10,11 +10,13 @@
 //
 // Chrome cannot relabel a menu entry per selection without a content script on
 // every site, so the suggested entry's title is fixed ("Open “%s” in the best
-// tool") and the routing happens on click.
+// tool") and the routing happens on click. On that click the real selection is
+// read from the page (lib/selection.js): selectionText loses line breaks.
 
 import { REGISTRY, BUNDLED_SLUGS, findTool } from './lib/tools-registry.js';
 import { BASE_URL } from './lib/config.js';
 import { DESTINATIONS, SMART_MENU_ID, buildToolUrl, resolveMenuClick } from './lib/router.js';
+import { normalizeSelection, readSelection } from './lib/selection.js';
 
 const ROOT_MENU_ID = 'zt-root';
 
@@ -32,9 +34,10 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-chrome.contextMenus.onClicked.addListener((info) => {
+chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (!info.selectionText) return;
-  const target = resolveMenuClick(info.menuItemId, info.selectionText);
+  const text = normalizeSelection(await readSelection(info, tab));
+  const target = resolveMenuClick(info.menuItemId, text);
   if (target) chrome.tabs.create({ url: target.url });
 });
 

@@ -63,8 +63,10 @@ BROWSER-NATIVE SHORTCUTS
 
 PRIVACY (READ THIS — IT IS THE WHOLE POINT)
 • Zero analytics, zero telemetry, zero third-party SDKs.
-• Three permissions only — storage, contextMenus, sidePanel — plus a single
-  host: tools.zerethon.com. No <all_urls>, no content scripts.
+• Minimal permissions — storage, contextMenus, sidePanel, activeTab,
+  scripting — plus a single host: tools.zerethon.com. No <all_urls>, no
+  content scripts. activeTab/scripting only read your selection (with its
+  line breaks) on the tab where you click a Zerethon Tools menu entry.
 • Favorites and recents are stored on your device only.
 • Selected text is never sent to our server: it travels in the URL
   fragment (#…), which browsers do not send to servers, and the

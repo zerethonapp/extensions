@@ -51,7 +51,9 @@ async function checkManifest() {
 
 async function checkPermissions() {
   const m = JSON.parse(await fs.readFile(path.join(SRC, 'manifest.json'), 'utf8'));
-  const banned = ['tabs', 'activeTab', 'scripting', 'webRequest', 'cookies', 'history', 'bookmarks', 'downloads', 'declarativeNetRequest'];
+  // activeTab + scripting are allowed (0.3.1): they show no install warning and only
+  // read the selection of the tab whose context menu the user clicked (lib/selection.js).
+  const banned = ['tabs', 'webRequest', 'cookies', 'history', 'bookmarks', 'downloads', 'declarativeNetRequest'];
   const offenders = (m.permissions || []).filter((p) => banned.includes(p));
   if (offenders.length) throw new Error(`disallowed permissions: ${offenders.join(', ')}`);
   const hostsAll = (m.host_permissions || []).filter((h) => h === '<all_urls>' || h.includes('://*/*'));

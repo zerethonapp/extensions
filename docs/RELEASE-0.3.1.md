@@ -1,9 +1,13 @@
-# Release 0.3.0 — Smart Context Router
+# Release 0.3.1 — Smart Context Router
 
 Status: **Ready to Submit** (not submitted). Upgrade of the existing listing
 `mdbcbnalkhjogllppjkenlecankpeomk`. Same item, same ID; no new listing.
 
-Package: `extensions/zerethon-tools-v0.3.0.zip` (built by `npm run build:prod`, 29 files, ~57 KB).
+Package: `extensions/zerethon-tools-v0.3.1.zip` (built by `npm run build:prod`).
+
+0.3.1 replaces the 0.3.0 package (never published): selected code kept its line breaks only
+in tests, not in real Chrome, because `info.selectionText` collapses whitespace. 0.3.1 reads the
+real selection on click (`activeTab` + `scripting`), so code, comments and indentation arrive intact.
 
 ## Release notes (paste into the dashboard "What's new" if asked)
 
@@ -17,6 +21,7 @@ Package: `extensions/zerethon-tools-v0.3.0.zip` (built by `npm run build:prod`, 
 - Detection runs locally with simple rules: no AI, no network request.
 - Selected text now travels in the URL fragment (`#…`), which browsers never send
   to a server (0.2.0 used the query string).
+- Selected code keeps its line breaks, indentation and comments.
 - Selections over 100 KB are no longer silently dropped: the tool opens and says
   to paste the text instead.
 
@@ -33,15 +38,18 @@ for users who update:
 
 Both sites keep accepting 0.2.0's `?input=` links, so deploying them first is safe.
 
-## Permissions — unchanged
+## Permissions — two added, neither shows a warning
 
-`storage`, `contextMenus`, `sidePanel`, host `https://tools.zerethon.com/*`. No
-new permission, no content script, no `<all_urls>`, so Chrome shows no new
-permission prompt and existing users are not disabled on update. Opening
-ide.zerethon.com is a plain `chrome.tabs.create` navigation (no host permission).
+`storage`, `contextMenus`, `sidePanel`, **`activeTab`**, **`scripting`**, host
+`https://tools.zerethon.com/*`. Chrome shows no install/update warning for
+`activeTab` or `scripting`, so existing users are not disabled on update. Still no
+content script and no `<all_urls>`. Why they are needed: Chrome's
+`info.selectionText` collapses line breaks; reading `window.getSelection()` in the
+clicked tab (only on a menu click) is the only way to get code intact. Opening
+ide.zerethon.com is a plain `chrome.tabs.create` navigation.
 
-Dashboard → Privacy practices: replace the `contextMenus` justification with the
-new text in [`PERMISSIONS.md`](PERMISSIONS.md). Others unchanged.
+Dashboard → Privacy practices: replace the `contextMenus` justification and add
+the new `activeTab` and `scripting` justifications from [`PERMISSIONS.md`](PERMISSIONS.md).
 
 ## Store listing changes
 
@@ -65,9 +73,9 @@ Automated (run 2026-10-31):
 
 | Check | Result |
 |---|---|
-| `npm test` — classifier + router (32 tests: URL/email/phone/JSON/Base64, 14 languages, prose false positives, 1 MB selection < 500 ms, fragment round-trip incl. Vietnamese/emoji, oversize flag, registry coverage) | pass |
+| `npm test` — classifier + router + selection (38 tests: real-selection read with fallbacks, CRLF/no-break-space normalization, Collatz starter round-trip, URL/email/phone/JSON/Base64, 14 languages, prose false positives, 1 MB selection < 500 ms, fragment round-trip incl. Vietnamese/emoji, oversize flag, registry coverage) | pass |
 | `npm run verify` (10 pre-submission checks) | pass |
-| `npm run build:prod` → zip contains manifest 0.3.0, prod `BASE_URL`/`IDE_URL`, unchanged permissions | pass |
+| `npm run build:prod` → zip contains manifest 0.3.1, prod `BASE_URL`/`IDE_URL`, permissions as listed above | pass |
 | Service worker with stubbed `chrome.*`: menu tree built, smart/manual clicks open the right URLs, omnibox still opens tools | pass |
 | tools.zerethon.com: PHPUnit 575 tests, `npm run test:js` 28 tests, `vite build`, Pint | pass |
 | Zerethon IDE: `npm run test:js` 29 tests, `vite build`, PHPUnit Release/Locale/Page filters | pass |
@@ -76,15 +84,16 @@ Automated (run 2026-10-31):
 Manual, in real Chrome (not done — needs a person with the unpacked build):
 
 - [ ] Fresh install of `dist/`: right-click a selection → submenu shows; each entry opens the right page.
-- [ ] Upgrade: install the 0.2.0 zip, star favorites, open some tools, then load 0.3.0 over it (same unpacked folder, "Update") → favorites/recents still there, old top-level entries gone.
-- [ ] Multi-line code selection: confirm `info.selectionText` keeps line breaks in the current Chrome (language detection relies on line structure; one-line code may land on `language=auto`).
+- [ ] Upgrade: install the 0.2.0 zip, star favorites, open some tools, then load 0.3.1 over it (same unpacked folder, "Update") → favorites/recents still there, old top-level entries gone.
+- [ ] Multi-line code selection (e.g. the Collatz starter on ide.zerethon.com/research/collatz-conjecture?tab=explore) → Open in IDE keeps every line, indentation and comment.
+- [ ] Selection inside a textarea; selection on a chrome:// page (falls back to the collapsed text).
 - [ ] Popup, side panel, `zt` omnibox, Ctrl/Cmd+Shift+Z, the three offline tools.
 - [ ] `docs/SMOKE-TEST.md` end-to-end on a clean profile.
 
 ## Chrome Web Store compliance checklist
 
-- [x] Manifest V3, version bumped 0.2.0 → 0.3.0, same item ID
-- [x] No new permissions or host permissions; no content scripts
+- [x] Manifest V3, version bumped 0.2.0 → 0.3.1, same item ID
+- [x] Only warning-free permissions added (activeTab, scripting), each justified; no new host, no content scripts
 - [x] CSP unchanged (`script-src 'self'`), no remote code, no eval (verify script)
 - [x] No AI/LLM/classification API; no network request on menu click besides opening the tab the user asked for
 - [x] Selected text not stored, not logged, carried only in the URL fragment
@@ -96,7 +105,7 @@ Manual, in real Chrome (not done — needs a person with the unpacked build):
 
 1. Finish "Must happen BEFORE submitting" above.
 2. `cd extensions && npm run verify && npm test && npm run build:prod`.
-3. https://chrome.google.com/webstore/devconsole → **Zerethon Tools** → Package → **Upload new package** → `zerethon-tools-v0.3.0.zip`. Confirm version 0.3.0 and the same 3 permissions + 1 host.
+3. https://chrome.google.com/webstore/devconsole → **Zerethon Tools** → Package → **Upload new package** → `zerethon-tools-v0.3.1.zip`. Confirm version 0.3.1 and the 5 permissions (storage, contextMenus, sidePanel, activeTab, scripting) + 1 host.
 4. Store listing: apply the changes listed above; upload the new screenshot #3.
 5. Privacy practices: paste the new `contextMenus` justification; keep "Website content" declared.
 6. **Submit for review.** Status becomes *Pending review*. Do not report it as approved until Google approves it.
