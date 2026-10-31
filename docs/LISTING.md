@@ -5,7 +5,7 @@ Paste-ready text for Chrome Web Store and Microsoft Edge Add-ons dashboards.
 ---
 
 ## Title (≤ 75 chars)
-> Zerethon Tools — Offline JSON, Base64, Hash + Launcher for 109 More
+> Zerethon Tools — Offline JSON, Base64, Hash + Launcher for 110 More
 
 ## Short summary / tagline (≤ 132 chars)
 > Right-click any selection → the right tool: QR code, JSON, Base64, hash, IDE. 3 offline tools + launcher. No AI, no analytics.
@@ -83,7 +83,7 @@ Questions, requests, bug reports: support@zerethon.com
 ```
 
 ## Single purpose declaration (Chrome dashboard, 1 sentence)
-> A privacy-first toolkit and launcher for the 112 free utilities at
+> A privacy-first toolkit and launcher for the 113 free utilities at
 > tools.zerethon.com — three tools (JSON Formatter, Base64 Encoder, Hash
 > Generator) run fully offline inside the extension, and the rest open via
 > a searchable popup, side panel, right-click context menu, or omnibox keyword.
@@ -130,7 +130,7 @@ Questions, requests, bug reports: support@zerethon.com
 | 2 | The bundled **JSON Formatter** tool open in a new tab with a 50-line payload formatted; Chrome DevTools Network panel visible in background showing "Offline" toggle ON | Proves offline claim demonstrably |
 | 3 | Right-click a selected URL → "Zerethon Tools" submenu open: "Open “…” in the best tool" first, then the manual entries and All Tools (re-capture for 0.3.0) | Proves browser-native value |
 | 4 | Address bar showing "zt json" with omnibox suggestions dropdown (json-formatter + json-diff + …) | Proves keyboard-first UX |
-| 5 | chrome://extensions showing Zerethon Tools with 0 warnings, permission list (storage, contextMenus, sidePanel) + single host tools.zerethon.com visible | Reviewer-friendly: shows minimum permissions |
+| 5 | chrome://extensions showing Zerethon Tools with 0 warnings, permission list (storage, contextMenus, sidePanel, activeTab, scripting) + single host tools.zerethon.com visible | Reviewer-friendly: shows minimum permissions |
 
 Capture all 5 with real Chrome on a clean profile. Do not use mockups.
 Screenshot #2 is the key differentiator — visually proves the "runs offline" claim that the tagline makes.
