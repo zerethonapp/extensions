@@ -21,7 +21,7 @@ Paste-ready text for Chrome Web Store and Microsoft Edge Add-ons dashboards.
 ## Full description (paste verbatim — plain text, line breaks preserved)
 
 ```
-Zerethon Tools is a privacy-first toolkit + launcher for 112 free dev,
+Zerethon Tools is a privacy-first toolkit + launcher for 113 free dev,
 creator, and web3 utilities. Three of the most-used tools run FULLY OFFLINE
 inside the extension — no network access, no data leaves your device.
 
@@ -36,10 +36,10 @@ THREE TOOLS RUN OFFLINE (no internet required)
 Open these from the launcher — no network call, no log on our server.
 Airplane-mode safe.
 
-109 MORE TOOLS — ONE CLICK AWAY
-Open as new tabs on tools.zerethon.com. The launcher searches all 112 by
+110 MORE TOOLS — ONE CLICK AWAY
+Open as new tabs on tools.zerethon.com. The launcher searches all 113 by
 name, slug, or keyword. A few examples:
-SQL Formatter · UUID Generator · URL Parser · Color Converter · Markdown
+QR Code Generator · SQL Formatter · UUID Generator · URL Parser · Color Converter · Markdown
 to HTML · CSV to JSON · YAML to JSON · Unix Timestamp Converter · UTM
 Builder · Regex Data Generator · Password Generator · Lorem Ipsum · Text
 Case Converter · Image Compressor · ETH Unit Converter · Wallet Address
@@ -56,7 +56,7 @@ BROWSER-NATIVE SHORTCUTS
   Format JSON, Encode/Decode Base64, Generate Hash, Convert case, Parse
   URL, All Tools. The text is prefilled on tools.zerethon.com or
   ide.zerethon.com.
-• Type "zt" in the address bar → autocomplete any of 112 tools.
+• Type "zt" in the address bar → autocomplete any of 113 tools.
 • Pin the launcher to Chrome's side panel — keep it visible while browsing.
 • Ctrl+Shift+Z (Cmd+Shift+Z on Mac) opens the launcher. Customise the
   shortcut in chrome://extensions/shortcuts.
